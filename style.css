@@ -1295,7 +1295,7 @@ label:focus-visible {
     text-decoration-thickness: 5px;
     text-underline-offset: 7px;
 }
-.about-page .about-hero > div > p:not(.section-kicker) {
+.about-page .about-hero > div:not(.about-hero-note) > p:not(.section-kicker) {
     max-width: 630px;
     margin: 0 0 28px;
     color: var(--muted);
@@ -1451,7 +1451,7 @@ label:focus-visible {
     .about-page .section-anchor { scroll-margin-top: 155px; }
     .about-page .about-hero { grid-template-columns: 1fr; padding: 45px 6%; }
     .about-page .about-hero h1 { letter-spacing: -1px; }
-    .about-page .about-hero > div > p:not(.section-kicker) { font-size: 16px; }
+    .about-page .about-hero > div:not(.about-hero-note) > p:not(.section-kicker) { font-size: 16px; }
     .about-page .about-hero-note { margin-right: 12px; }
     .about-page .about-section { padding: 45px 5%; }
     .about-page .about-group-layout,
@@ -1584,3 +1584,36 @@ label:focus-visible {
     .apply-page .apply-field textarea { scroll-margin-top: 165px; }
 }
 /* ======================== APPLY PAGE — END ======================== */
+
+
+/* APPLY — Persistent error feedback after interaction or a submit attempt.
+   Native HTML validation remains enabled; no JavaScript is used. */
+.apply-page .apply-error {
+    display: none;
+    margin: 8px 0 0;
+    color: #9f1239;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+.apply-page .apply-field input:user-invalid,
+.apply-page .apply-field select:user-invalid,
+.apply-page .apply-field textarea:user-invalid {
+    border-color: #b42318;
+    background-color: #fff1f2;
+    box-shadow: 0 0 0 1px #b42318;
+}
+.apply-page .apply-field input:user-invalid ~ .apply-error,
+.apply-page .apply-field select:user-invalid ~ .apply-error,
+.apply-page .apply-field textarea:user-invalid ~ .apply-error,
+.apply-page .apply-choice-fieldset:has(input:user-invalid) > .apply-error {
+    display: block;
+}
+.apply-page .apply-choice:has(input:user-invalid) {
+    border-color: #b42318;
+    background-color: #fff1f2;
+}
+.apply-page .apply-field input[type="date"] {
+    min-width: 0;
+    color-scheme: light;
+}
