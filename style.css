@@ -1673,8 +1673,8 @@ label:focus-visible {
 .about-page h1,
 .about-page .section-heading h2,
 .about-page .about-group-layout h2 {
-    font-family: Impact, "Arial Narrow", Arial, sans-serif;
-    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
     letter-spacing: -.8px;
 }
 .about-page .about-hero h1 { font-size: clamp(48px, 5.2vw, 76px); line-height: 1.03; }
@@ -1688,7 +1688,7 @@ label:focus-visible {
     box-shadow: 12px 12px 0 #29247f;
 }
 .about-page .about-note-number { font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 400; font-size: 88px; }
-.about-page .about-hero-note h2 { font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 400; font-size: 38px; }
+.about-page .about-hero-note h2 { font-family: Arial, Helvetica, sans-serif; font-weight: 800; font-size: 38px; }
 .about-page .about-hero .about-hero-note p { color: #28234f; }
 .about-page .about-section { padding: 64px 6%; background: #eef1ff; }
 .about-page .section-heading { margin: 0 auto 42px; max-width: 800px; text-align: center; }
@@ -1844,3 +1844,6 @@ label:focus-visible {
 .mobile-menu[open] .mobile-menu-bars > span:nth-child(1) { top: 6px; transform: rotate(45deg); }
 .mobile-menu[open] .mobile-menu-bars > span:nth-child(2) { opacity: 0; }
 .mobile-menu[open] .mobile-menu-bars > span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+/* Keep the wider Arial heading comfortable on narrow cards. */
+@media (max-width: 560px) { .about-page .about-hero-note h2 { font-size: 28px; line-height: 1.2; } }
