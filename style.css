@@ -251,7 +251,11 @@ img {
 }
 
 .hero h1 span {
-    color: var(--yellow);
+    color: var(--purple-dark);
+    text-decoration: underline;
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 5px;
+    text-underline-offset: 8px;
 }
 
 .hero-description {
@@ -1815,3 +1819,13 @@ label:focus-visible {
 .home-search-suggestions a:hover { background: #eef1ff; border-color: #3933ad; }
 @media (max-width: 1180px) { .home-job-search { margin: 48px 5%; } }
 @media (max-width: 600px) { .home-job-search { margin: 36px 5%; padding: 26px 20px; border-radius: 20px; } .home-search-controls { flex-direction: column; } .home-search-controls button { width: 100%; } .home-search-suggestions { align-items: flex-start; flex-direction: column; } .home-search-suggestions a { max-width: 100%; } }
+
+
+/* Home slider: show keyboard focus on the visible dot for the hidden radio. */
+#learning-slide-1:focus-visible ~ .slider-dots label[for="learning-slide-1"],
+#learning-slide-2:focus-visible ~ .slider-dots label[for="learning-slide-2"],
+#learning-slide-3:focus-visible ~ .slider-dots label[for="learning-slide-3"] {
+    outline: 3px solid #29247f;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 3px #ffffff;
+}

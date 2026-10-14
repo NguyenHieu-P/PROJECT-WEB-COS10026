@@ -6,6 +6,11 @@
     <meta name="description" content="Join Lumina Learn and help make digital education accessible to everyone.">
     <title>Lumina Learn | Careers</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Part 1 embedded CSS: one small, page-specific example.
+         Shared layout and component styles remain in the external stylesheet. -->
+    <style>
+        .home-search-intro .section-kicker { letter-spacing: 2px; }
+    </style>
 </head>
 <body>
     <!-- Sticky navigation -->
@@ -130,7 +135,7 @@
              The keyword is submitted as a query parameter; no filtering is implemented. -->
         <section class="home-job-search" aria-labelledby="job-search-title">
             <div class="home-search-intro">
-                <p class="section-kicker">YOUR NEXT CHAPTER</p>
+                <p class="section-kicker" style="font-weight: 800;">YOUR NEXT CHAPTER</p>
                 <h2 id="job-search-title">Find your next role.</h2>
                 <p>Bring your skills to a team making learning more accessible.</p>
             </div>
@@ -141,7 +146,7 @@
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
                         <input type="search" id="job-keyword" name="keywords" placeholder="e.g. design, front-end, education" maxlength="80">
                     </div>
-                    <button class="button button-dark" type="submit">Browse all jobs <span aria-hidden="true">→</span></button>
+                    <button class="button button-dark" type="submit">Search jobs <span aria-hidden="true">→</span></button>
                 </div>
                 <p id="job-search-note" class="home-search-note">Keyword search preview. This button currently shows all available jobs.</p>
             </form>
@@ -272,8 +277,8 @@
         </div>
         <div class="footer-resources">
             <h2>Project Resources</h2>
-            <p>Jira Project: <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener noreferrer">Add your Jira link</a></p>
-            <p>GitHub Repository: <a href="https://github.com/" target="_blank" rel="noopener noreferrer">Add your GitHub link</a></p>
+            <p>Jira Project: <a href="https://hyo2108.atlassian.net/jira/software/projects/SCRUM/boards/1" target="_blank" rel="noopener noreferrer">COS10026 Jira board</a></p>
+            <p>GitHub Repository: <a href="https://github.com/NguyenHieu-P/PROJECT-WEB-COS10026" target="_blank" rel="noopener noreferrer">PROJECT-WEB-COS10026</a></p>
             <p>Email: <a href="mailto:info@luminalearn.com">info@luminalearn.com</a></p>
         </div>
         <p class="copyright">© 2026 Lumina Learn. All rights reserved.</p>
