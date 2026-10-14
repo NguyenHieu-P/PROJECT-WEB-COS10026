@@ -1617,3 +1617,44 @@ label:focus-visible {
     min-width: 0;
     color-scheme: light;
 }
+
+
+/* Native HTML mobile menu: no JavaScript; desktop navigation remains visible. */
+.mobile-menu { display: none; position: relative; }
+.mobile-menu-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border: 1px solid var(--line);
+    border-radius: 12px; background: white; cursor: pointer; list-style: none;
+}
+.mobile-menu-toggle::-webkit-details-marker { display: none; }
+.mobile-menu-toggle:focus-visible {
+    outline: 3px solid var(--purple-dark); outline-offset: 3px;
+}
+.mobile-menu-bars { display: flex; flex-direction: column; gap: 5px; }
+.mobile-menu-bars > span { width: 22px; height: 2px; background: var(--purple); }
+.mobile-menu[open] .mobile-menu-toggle { background: var(--lavender); border-color: var(--purple); }
+.mobile-menu-panel {
+    position: absolute; top: calc(100% + 10px); right: 0; z-index: 1100;
+    width: min(290px, calc(100vw - 32px)); padding: 10px;
+    max-height: calc(100dvh - 110px); overflow-y: auto;
+    border: 1px solid var(--line); border-radius: 16px;
+    background: white; box-shadow: 0 12px 30px rgba(31,29,94,.18);
+}
+.mobile-menu-panel a {
+    display: block; padding: 12px 14px; min-height: 44px;
+    border-radius: 8px; color: var(--purple-dark); font-weight: 700;
+    text-decoration: none;
+}
+.mobile-menu-panel a:hover,
+.mobile-menu-panel a[aria-current="page"] { background: var(--lavender); }
+.mobile-menu-panel a:focus-visible { outline: 3px solid var(--purple-dark); outline-offset: -3px; }
+@media (max-width: 700px) {
+    .site-header { flex-wrap: nowrap; gap: 8px; padding: 12px 4%; }
+    .site-header .main-nav { display: none; }
+    .site-header .brand-mark { width: 28px; height: 28px; font-size: 18px; }
+    .site-header .brand { gap: 6px; }
+    .site-header .brand-name { font-size: 12px; }
+    .site-header .header-actions { gap: 8px; margin-left: auto; }
+    .site-header .apply-button { padding: 8px 12px; font-size: 12px; }
+    .site-header .mobile-menu { display: block; }
+}
