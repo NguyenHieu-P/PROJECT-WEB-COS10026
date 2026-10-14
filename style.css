@@ -1658,3 +1658,160 @@ label:focus-visible {
     .site-header .apply-button { padding: 8px 12px; font-size: 12px; }
     .site-header .mobile-menu { display: block; }
 }
+
+/* About redesign inspired by the supplied Figma frame.
+   Scoped styles preserve the other pages and native mobile navigation. */
+.about-page { background: #eef1ff; }
+.about-page .site-header { background: #ffffff; }
+.about-page .about-hero,
+.about-page .about-section { max-width: none; }
+.about-page .about-hero { padding: 82px max(6%, calc((100vw - 1160px) / 2)); gap: 64px; }
+.about-page h1,
+.about-page .section-heading h2,
+.about-page .about-group-layout h2 {
+    font-family: Impact, "Arial Narrow", Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: -.8px;
+}
+.about-page .about-hero h1 { font-size: clamp(48px, 5.2vw, 76px); line-height: 1.03; }
+.about-page .about-hero h1 span { text-decoration-thickness: 6px; text-underline-offset: 9px; }
+.about-page .about-hero > div:not(.about-hero-note) > p:not(.section-kicker) { max-width: 590px; font-size: 17px; line-height: 1.8; }
+.about-page .section-kicker { font-size: 11px; letter-spacing: 2.5px; }
+.about-page .button { border-radius: 999px; }
+.about-page .about-hero .about-hero-note {
+    align-self: center; padding: 32px; border-radius: 26px;
+    border: 2px solid #29247f; transform: rotate(4deg);
+    box-shadow: 12px 12px 0 #29247f;
+}
+.about-page .about-note-number { font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 400; font-size: 88px; }
+.about-page .about-hero-note h2 { font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 400; font-size: 38px; }
+.about-page .about-hero .about-hero-note p { color: #28234f; }
+.about-page .about-section { padding: 64px 6%; background: #eef1ff; }
+.about-page .section-heading { margin: 0 auto 42px; max-width: 800px; text-align: center; }
+.about-page .section-heading h2 { color: #29247f; font-size: clamp(38px, 4vw, 54px); line-height: 1.12; }
+.about-page .section-heading p:not(.section-kicker) { color: #55566b; }
+.about-page .about-values { gap: 22px; max-width: 1120px; }
+.about-page .about-values article { border: 0; background: #ffffff; border-radius: 18px; box-shadow: 0 4px 0 #e0e4fa; }
+.about-page .about-value-number { font-size: 30px; font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 400; }
+.about-page .about-values h3 { font-size: 19px; }
+.about-page .about-values p { font-size: 14px; line-height: 1.75; }
+.about-page .about-group-layout { grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: center; }
+.about-page .about-group-layout h2 { color: #29247f; font-size: 64px; line-height: .98; text-transform: uppercase; }
+.about-page .about-info-list { background: #e3e7f6; border-left: 0; border-radius: 22px; padding: 30px 30px 30px 50px; }
+.about-page .about-team { grid-template-columns: 1fr; gap: 70px; max-width: 1040px; padding-top: 20px; }
+.about-page .about-member {
+    display: grid; grid-template-columns: 230px minmax(0, 1fr); column-gap: 42px;
+    padding: 32px 40px 32px 26px; margin-left: 24px;
+    background: #ffffff; border: 0; border-radius: 20px; box-shadow: none;
+}
+.about-page .about-member dt { grid-column: 2; margin: 0 0 10px; font-size: 25px; color: #29247f; }
+.about-page .about-member dt span { letter-spacing: 1px; margin-top: 7px; font-size: 11px; }
+.about-page .about-member dd { grid-column: 2; margin: 0 0 14px; font-size: 14px; line-height: 1.65; }
+.about-page .about-member .about-student-id { justify-self: start; font-size: 12px; padding: 4px 10px; }
+.about-page .about-member .about-quote { margin: 8px 0 0; padding: 0 0 0 16px; }
+.about-page .about-quote span { font-size: 12px; line-height: 1.7; }
+.about-page .about-member .about-portrait { grid-column: 1; grid-row: 1 / span 4; margin: -55px 0 -15px -28px; align-self: center; }
+.about-page .member-photo { position: relative; width: 230px; margin: 0; transform: rotate(-8deg); padding: 9px 9px 0; background: #ffffff; box-shadow: -14px 14px 0 #dce3ff, 0 10px 24px #29247f1a; }
+.about-page .portrait-art { height: 265px; overflow: hidden; display: grid; place-items: center; position: relative; background: #d5dcff; }
+.about-page .portrait-art::before { content: ""; position: absolute; width: 190px; height: 190px; border: 1px solid #29247f50; border-radius: 50%; top: -40px; right: -60px; }
+.about-page .portrait-art::after { content: ""; position: absolute; width: 180px; height: 180px; background: #ffffff40; border-radius: 50%; bottom: -75px; left: -35px; }
+.about-page .portrait-art span { color: #29247f; font-family: Impact, "Arial Narrow", Arial, sans-serif; font-size: 63px; z-index: 1; letter-spacing: -1px; }
+.about-page .member-photo figcaption { color: #29247f; font-size: 10px; font-weight: 700; padding: 10px 3px; text-transform: uppercase; letter-spacing: .9px; }
+.about-page .member-photo-2 .portrait-art { background: #ffe09a; }
+.about-page .member-photo-3 .portrait-art { background: #dfd3fa; }
+.about-page .member-photo-4 .portrait-art { background: #cce9e8; }
+.about-page .about-member:nth-child(even) { grid-template-columns: minmax(0, 1fr) 230px; margin-left: 0; margin-right: 24px; padding: 32px 26px 32px 40px; }
+.about-page .about-member:nth-child(even) dt,
+.about-page .about-member:nth-child(even) dd { grid-column: 1; }
+.about-page .about-member:nth-child(even) .about-portrait { grid-column: 2; margin: -55px -28px -15px 0; }
+.about-page .about-member:nth-child(even) .member-photo { transform: rotate(8deg); box-shadow: 14px 14px 0 #dce3ff, 0 10px 24px #29247f1a; }
+.about-page .about-member:hover { transform: none; box-shadow: 0 10px 28px #29247f0a; }
+.about-page .about-group-photo { max-width: 1040px; border: 0; border-radius: 25px; padding: 14px; }
+.about-page .about-photo-placeholder { background: #ffedb7; border: 1px dashed #a67b16; min-height: 340px; border-radius: 17px; }
+.about-page .about-photo-placeholder strong { color: #29247f; }
+.about-page .about-facts { border-radius: 14px; overflow: hidden; }
+.about-page .about-facts caption { background: #ffdf88; padding: 20px; }
+.about-page .about-country {
+    max-width: 1120px;
+    margin: 24px auto 44px;
+    padding: 0 40px;
+    background: transparent;
+    border-top: 0;
+}
+.about-page .about-country h2 { color: #29247f; font-size: 24px; }
+.about-page .about-country h2::before {
+    content: ""; display: block; width: 36px; height: 3px;
+    margin-bottom: 18px; border-radius: 2px; background: #3933ad;
+}
+.about-page .about-country p { max-width: 960px; font-size: 14px; line-height: 1.8; }
+.about-page .cta-section {
+    max-width: 1120px;
+    margin: 0 auto 64px;
+    padding: 36px 40px;
+    border-radius: 24px;
+    background: #ffbf24;
+}
+.about-page .cta-section h2 { max-width: 850px; color: #29247f; font-size: clamp(28px, 3vw, 34px); line-height: 1.2; }
+.about-page .cta-section p:not(.section-kicker) { max-width: 800px; font-size: 16px; line-height: 1.7; }
+.about-page .site-footer { background: #29247f; }
+@media (max-width: 800px) {
+    .about-page .about-country { max-width: calc(100% - 40px); padding: 0 24px; }
+    .about-page .cta-section { max-width: calc(100% - 40px); padding: 32px 24px; }
+    .about-page .about-hero { grid-template-columns: 1fr; padding: 50px 7%; gap: 35px; }
+    .about-page .about-hero .about-hero-note { max-width: 340px; width: 90%; justify-self: center; }
+    .about-page .about-group-layout { grid-template-columns: 1fr; gap: 25px; }
+    .about-page .about-team { gap: 50px; }
+    .about-page .about-member,
+    .about-page .about-member:nth-child(even) { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; padding: 25px; margin: 0; }
+    .about-page .member-photo { width: 170px; }
+    .about-page .portrait-art { height: 215px; }
+    .about-page .portrait-art span { font-size: 48px; }
+    .about-page .about-member .about-portrait,
+    .about-page .about-member:nth-child(even) .about-portrait { grid-column: 1; margin: -20px 0 0; }
+    .about-page .about-member dt,
+    .about-page .about-member dd,
+    .about-page .about-member:nth-child(even) dt,
+    .about-page .about-member:nth-child(even) dd { grid-column: 2; }
+}
+@media (max-width: 560px) {
+    .about-page .about-country { max-width: calc(100% - 32px); margin: 20px auto 32px; padding: 0 16px; }
+    .about-page .about-country h2 { font-size: 22px; }
+    .about-page .cta-section { max-width: calc(100% - 32px); margin-bottom: 40px; padding: 28px 24px; border-radius: 20px; }
+    .about-page .cta-section p:not(.section-kicker) { font-size: 15px; }
+    .about-page .about-section { padding: 45px 7%; }
+    .about-page .about-group-layout h2 { font-size: 50px; }
+    .about-page .about-member,
+    .about-page .about-member:nth-child(even) { display: flex; flex-direction: column; gap: 0; padding: 26px; }
+    .about-page .about-member .about-portrait,
+    .about-page .about-member:nth-child(even) .about-portrait { order: -1; align-self: center; margin: -5px 0 32px; }
+    .about-page .member-photo { width: 200px; }
+    .about-page .portrait-art { height: 220px; }
+    .about-page .about-member dt { font-size: 23px; }
+    .about-page .about-member .about-student-id { align-self: flex-start; }
+    .about-page .about-hero h1 { font-size: 48px; letter-spacing: -1px; }
+    .about-page .about-info-list { padding: 24px 20px 24px 38px; font-size: 14px; }
+    .about-page .about-photo-placeholder { min-height: 230px; padding: 20px; }
+}
+
+/* Home — job search interface preview, using only HTML and CSS. */
+.home-job-search { max-width: 1120px; margin: 56px auto; padding: 40px; border: 1px solid #d9ddf6; border-radius: 24px; background: #ffffff; box-shadow: 0 8px 30px #29247f08; }
+.home-search-intro .section-kicker { color: #3933ad; margin: 0 0 12px; }
+.home-search-intro h2 { margin: 0 0 12px; color: #29247f; font-size: clamp(30px, 3vw, 40px); line-height: 1.15; letter-spacing: -1px; }
+.home-search-intro > p:last-child { margin: 0 0 28px; color: #55566b; font-size: 16px; }
+.home-search-form > label { display: block; margin-bottom: 9px; color: #29247f; font-size: 14px; font-weight: 700; }
+.home-search-controls { display: flex; gap: 12px; }
+.home-search-input-wrap { display: flex; align-items: center; flex: 1; min-width: 0; gap: 12px; padding: 0 16px; border: 1px solid #8986b5; border-radius: 12px; background: #f8f9ff; color: #55566b; }
+.home-search-input-wrap svg { flex-shrink: 0; }
+.home-search-input-wrap input { min-width: 0; width: 100%; min-height: 54px; padding: 12px 0; border: 0; background: transparent; color: #17172b; font: inherit; font-size: 16px; }
+.home-search-input-wrap input::placeholder { color: #666579; }
+.home-search-input-wrap:focus-within { outline: 3px solid #29247f; outline-offset: 3px; }
+.home-search-input-wrap input:focus { outline: none; }
+.home-search-controls button { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 54px; border: 0; border-radius: 12px; cursor: pointer; font: inherit; font-weight: 700; white-space: nowrap; }
+.home-search-controls button:focus-visible { outline: 3px solid #29247f; outline-offset: 3px; }
+.home-search-note { margin: 12px 0 0; color: #55566b; font-size: 13px; line-height: 1.6; }
+.home-search-suggestions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding-top: 22px; border-top: 1px solid #e3e6f5; }
+.home-search-suggestions > span { margin-right: 5px; color: #55566b; font-size: 13px; }
+.home-search-suggestions a { display: inline-flex; align-items: center; gap: 12px; padding: 9px 13px; border: 1px solid #d9ddf6; border-radius: 999px; color: #29247f; font-size: 13px; font-weight: 700; text-decoration: none; }
+.home-search-suggestions a:hover { background: #eef1ff; border-color: #3933ad; }
+@media (max-width: 1180px) { .home-job-search { margin: 48px 5%; } }
+@media (max-width: 600px) { .home-job-search { margin: 36px 5%; padding: 26px 20px; border-radius: 20px; } .home-search-controls { flex-direction: column; } .home-search-controls button { width: 100%; } .home-search-suggestions { align-items: flex-start; flex-direction: column; } .home-search-suggestions a { max-width: 100%; } }
