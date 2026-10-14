@@ -1829,3 +1829,18 @@ label:focus-visible {
     outline-offset: 4px;
     box-shadow: 0 0 0 3px #ffffff;
 }
+
+/* Mobile navigation: explicit open/close cue, using native details only. */
+.mobile-menu-toggle { flex-direction: column; gap: 4px; width: 48px; height: 48px; color: var(--purple-dark); }
+.mobile-menu-label { font-size: 10px; line-height: 1; font-weight: 700; }
+.menu-label-close { display: none; }
+.mobile-menu[open] .menu-label-open { display: none; }
+.mobile-menu[open] .menu-label-close { display: inline; }
+.mobile-menu-bars { position: relative; width: 22px; height: 14px; }
+.mobile-menu-bars > span { position: absolute; left: 0; }
+.mobile-menu-bars > span:nth-child(1) { top: 0; }
+.mobile-menu-bars > span:nth-child(2) { top: 6px; }
+.mobile-menu-bars > span:nth-child(3) { top: 12px; }
+.mobile-menu[open] .mobile-menu-bars > span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.mobile-menu[open] .mobile-menu-bars > span:nth-child(2) { opacity: 0; }
+.mobile-menu[open] .mobile-menu-bars > span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
