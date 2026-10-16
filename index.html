@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Join Lumina Learn and help make digital education accessible to everyone.">
     <title>Lumina Learn | Careers</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Part 1 embedded CSS: one small, page-specific example.
+         Shared layout and component styles remain in the external stylesheet. -->
+    <style>
+        .home-search-intro .section-kicker { letter-spacing: 2px; }
+    </style>
 </head>
-<body>
+<body class="home-page">
+    <a class="skip-link" href="#home-main">Skip to main content</a>
     <!-- Sticky navigation -->
     <header class="site-header">
         <a class="brand" href="#home" aria-label="Lumina Learn home">
@@ -15,32 +23,61 @@
             <span class="brand-name">LUMINA<span>LEARN</span></span>
         </a>
 
+        <!-- Native HTML popovers: click/Enter opens; Escape/outside click closes. -->
         <nav class="main-nav" aria-label="Main navigation">
-            <a class="nav-link active" href="#home">Home</a>
-
             <div class="nav-dropdown">
-                <a class="nav-link dropdown-toggle" href="#our-impact">Our Impact <span class="caret">⌄</span></a>
-                <div class="dropdown-menu">
-                    <a href="#our-impact">Our Impact</a>
-                    <a href="#career">Career</a>
-                    <a href="#why-join-us">Why Join Us?</a>
-                    <a href="#call-to-action">Call to Action</a>
+                <button class="nav-link dropdown-toggle active" type="button" popovertarget="nav-home-links">Home <span class="caret" aria-hidden="true">⌄</span></button>
+                <div class="dropdown-menu" id="nav-home-links" popover="auto" role="group" aria-label="Home links">
+                    <div class="dropdown-heading">
+                        <span>Home</span>
+                        <button class="dropdown-close" type="button" popovertarget="nav-home-links" popovertargetaction="hide" aria-label="Close Home navigation"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <a href="index.html#home" aria-current="page">Home overview</a>
+                    <a href="index.html#our-impact">Our mission</a>
+                    <a href="index.html#career">Career paths</a>
+                    <a href="index.html#why-join-us">Why join us?</a>
                 </div>
             </div>
-
-            <a class="nav-link" href="jobs.html">Jobs</a>
-            <a class="nav-link" href="about.html">About Us</a>
+            <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" type="button" popovertarget="nav-jobs-links">Jobs <span class="caret" aria-hidden="true">⌄</span></button>
+                <div class="dropdown-menu" id="nav-jobs-links" popover="auto" role="group" aria-label="Jobs links">
+                    <div class="dropdown-heading">
+                        <span>Jobs</span>
+                        <button class="dropdown-close" type="button" popovertarget="nav-jobs-links" popovertargetaction="hide" aria-label="Close Jobs navigation"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <a href="jobs.html">Jobs overview</a>
+                    <a href="jobs.html#frontend-developer">Front-End Web Developer</a>
+                    <a href="jobs.html#ux-ui-designer">UX/UI Designer</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" type="button" popovertarget="nav-about-links">About Us <span class="caret" aria-hidden="true">⌄</span></button>
+                <div class="dropdown-menu" id="nav-about-links" popover="auto" role="group" aria-label="About Us links">
+                    <div class="dropdown-heading">
+                        <span>About Us</span>
+                        <button class="dropdown-close" type="button" popovertarget="nav-about-links" popovertargetaction="hide" aria-label="Close About Us navigation"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <a href="about.html">About Us overview</a>
+                    <a href="about.html#our-project">Our project</a>
+                    <a href="about.html#group-info">Get to know us</a>
+                    <a href="about.html#team-members">Meet our team</a>
+                    <a href="about.html#site-footer">Contact us</a>
+                </div>
+            </div>
         </nav>
 
         <div class="header-actions">
             <a class="apply-button" href="apply.html">Apply</a>
-            <a class="menu-icon" href="#site-footer" aria-label="Go to footer">
-                <span></span><span></span><span></span>
-            </a>
+            <details class="mobile-menu">
+                <summary class="mobile-menu-toggle" aria-label="Navigation menu">
+                    <span class="mobile-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="mobile-menu-label" aria-hidden="true"><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></span>
+                </summary>
+                <nav class="mobile-menu-panel" aria-label="Mobile navigation"><details class="mobile-nav-group"><summary>Home</summary><a href="index.html#home" aria-current="page">Home overview</a><a href="index.html#our-impact">Our mission</a><a href="index.html#career">Career paths</a><a href="index.html#why-join-us">Why join us?</a></details><details class="mobile-nav-group"><summary>Jobs</summary><a href="jobs.html">Jobs overview</a><a href="jobs.html#frontend-developer">Front-End Web Developer</a><a href="jobs.html#ux-ui-designer">UX/UI Designer</a></details><details class="mobile-nav-group"><summary>About Us</summary><a href="about.html">About Us overview</a><a href="about.html#our-project">Our project</a><a href="about.html#group-info">Get to know us</a><a href="about.html#team-members">Meet our team</a><a href="about.html#site-footer">Contact us</a></details><a href="apply.html">Apply</a></nav>
+            </details>
         </div>
     </header>
 
-    <main>
+    <main id="home-main" tabindex="-1">
         <!-- Home / hero -->
         <section class="hero section-anchor" id="home">
             <div class="hero-copy">
@@ -53,34 +90,26 @@
                 </p>
                 <div class="hero-actions">
                     <a class="button button-primary" href="jobs.html">Explore Jobs</a>
-                    <a class="button button-secondary" href="#about-us">About Us</a>
+                    <a class="button button-secondary" href="about.html">About Us</a>
                 </div>
             </div>
-            <div class="hero-decoration" aria-hidden="true">
-                <span class="sun-shape"></span>
-                <span class="orbit orbit-one"></span>
-                <span class="orbit orbit-two"></span>
-                <div class="hero-note">
-                    <span class="note-dot"></span>
-                    Learning for everyone
-                </div>
-            </div>
+
         </section>
 
         <!-- Impact: image slider left, text right -->
-        <section class="impact-section section-anchor" id="our-impact">
+        <section class="impact-section section-anchor" id="our-impact" aria-labelledby="impact-title">
             <div class="image-slider" aria-label="Learning at Lumina Learn">
                 <!-- CSS-only slider: choose an image using the dots -->
-                <input type="radio" name="learning-slide" id="learning-slide-1" checked>
-                <input type="radio" name="learning-slide" id="learning-slide-2">
-                <input type="radio" name="learning-slide" id="learning-slide-3">
+                <input type="radio" name="learning-slide" id="learning-slide-1" aria-label="Show image 1 of 3" checked>
+                <input type="radio" name="learning-slide" id="learning-slide-2" aria-label="Show image 2 of 3">
+                <input type="radio" name="learning-slide" id="learning-slide-3" aria-label="Show image 3 of 3">
 
                 <div class="slider-window">
                     <div class="slider-track">
-                        <!-- Replace these files with your own images in the images folder -->
-                        <img src="images/learning1.jpg" alt="Students learning together around a laptop">
-                        <img src="images/learning2.jpg" alt="Students collaborating on a project">
-                        <img src="images/learning3.jpg" alt="An online learning session">
+                        <!-- Illustrations supplied in the team folder; WebP versions preserve the full composition. -->
+                        <img src="images/learning1.webp" alt="Two children using an online learning platform together on a laptop." width="1536" height="1024" decoding="async">
+                        <img src="images/learning2.webp" alt="A child learning online, with illustrated features for courses, personalised learning and progress tracking." width="1536" height="1024" decoding="async">
+                        <img src="images/learning3.webp" alt="A child celebrating a completed maths exercise, with illustrated learning progress charts." width="1536" height="1024" decoding="async">
                     </div>
                     <div class="slider-arrow arrow-one">
                         <label for="learning-slide-3" aria-label="Previous image">‹</label>
@@ -105,7 +134,7 @@
 
             <div class="impact-copy">
                 <p class="section-kicker">OUR IMPACT</p>
-                <h2>Making Learning Accessible to Everyone</h2>
+                <h2 id="impact-title">Making Learning Accessible to Everyone</h2>
                 <p>
                     Education opens doors to new opportunities, but not everyone
                     has equal access to the tools and resources they need.
@@ -123,6 +152,32 @@
             </div>
         </section>
 
+        <!-- Search interface preview: static HTML opens the full Jobs page.
+             The keyword is submitted as a query parameter; no filtering is implemented. -->
+        <section class="home-job-search" aria-labelledby="job-search-title">
+            <div class="home-search-intro">
+                <p class="section-kicker" style="font-weight: 800;">YOUR NEXT CHAPTER</p>
+                <h2 id="job-search-title">Find your next role.</h2>
+                <p>Bring your skills to a team making learning more accessible.</p>
+            </div>
+            <form class="home-search-form" role="search" action="jobs.html" method="get" aria-describedby="job-search-note">
+                <label for="job-keyword">Job title or keyword</label>
+                <div class="home-search-controls">
+                    <div class="home-search-input-wrap">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
+                        <input type="search" id="job-keyword" name="keywords" placeholder="e.g. design, front-end, education" maxlength="80">
+                    </div>
+                    <button class="button button-dark" type="submit">Search jobs <span aria-hidden="true">→</span></button>
+                </div>
+                <p id="job-search-note" class="home-search-note">Keyword search preview. This button currently shows all available jobs.</p>
+            </form>
+            <div class="home-search-suggestions">
+                <span>Explore our roles</span>
+                <a href="jobs.html#frontend-developer">Front-End Web Developer <span aria-hidden="true">↗</span></a>
+                <a href="jobs.html#ux-ui-designer">UX/UI Designer <span aria-hidden="true">↗</span></a>
+            </div>
+        </section>
+
         <!-- Career table with cell merging -->
         <section class="career-section section-anchor" id="career">
             <div class="section-heading">
@@ -136,32 +191,37 @@
 
             <div class="table-wrap">
                 <table class="career-table">
-                    <tr>
-                        <th colspan="3" class="table-title">Career Opportunities at Lumina Learn</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Department</th>
-                        <th scope="col">Career Focus</th>
-                        <th scope="col">Skills &amp; Interests</th>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="department-cell">Design &amp; UX</td>
-                        <td>Accessible interfaces</td>
-                        <td>UI/UX design, prototyping</td>
-                    </tr>
-                    <tr>
-                        <td>User research</td>
-                        <td>Research, analysis</td>
-                    </tr>
-                    <tr>
-                        <td class="department-cell">Engineering</td>
-                        <td colspan="2">Responsive learning platforms — HTML, CSS and programming</td>
-                    </tr>
-                    <tr>
-                        <td class="department-cell">Education &amp; Content</td>
-                        <td>Digital learning resources</td>
-                        <td>Writing, content design</td>
-                    </tr>
+                    <caption class="table-title">Career Opportunities at Lumina Learn</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Department</th>
+                            <th scope="col">Career Focus</th>
+                            <th scope="col">Skills &amp; Interests</th>
+                        </tr>
+                    </thead>
+                    <!-- Design & UX is the header for this two-row group. -->
+                    <tbody>
+                        <tr>
+                            <th scope="rowgroup" rowspan="2" class="department-cell">Design &amp; UX</th>
+                            <td>Accessible interfaces</td>
+                            <td>UI/UX design, prototyping</td>
+                        </tr>
+                        <tr>
+                            <td>User research</td>
+                            <td>Research, analysis</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="department-cell">Engineering</th>
+                            <td colspan="2">Responsive learning platforms — HTML, CSS and programming</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="department-cell">Education &amp; Content</th>
+                            <td>Digital learning resources</td>
+                            <td>Writing, content design</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <p class="table-note">Explore the <a href="#call-to-action">application information</a> or contact our team to learn more.</p>
@@ -243,8 +303,8 @@
         </div>
         <div class="footer-resources">
             <h2>Project Resources</h2>
-            <p>Jira Project: <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener noreferrer">Add your Jira link</a></p>
-            <p>GitHub Repository: <a href="https://github.com/" target="_blank" rel="noopener noreferrer">Add your GitHub link</a></p>
+            <p>Jira Project: <a href="https://hyo2108.atlassian.net/jira/software/projects/SCRUM/boards/1" target="_blank" rel="noopener noreferrer">COS10026 Jira board</a></p>
+            <p>GitHub Repository: <a href="https://github.com/NguyenHieu-P/PROJECT-WEB-COS10026" target="_blank" rel="noopener noreferrer">PROJECT-WEB-COS10026</a></p>
             <p>Email: <a href="mailto:info@luminalearn.com">info@luminalearn.com</a></p>
         </div>
         <p class="copyright">© 2026 Lumina Learn. All rights reserved.</p>
@@ -252,7 +312,7 @@
 
     <!-- Optional floating Zalo contact button: replace URL and icon file -->
     <a class="zalo-float" href="https://zalo.me/" target="_blank" rel="noopener noreferrer" aria-label="Contact Lumina Learn on Zalo">
-        <img src="images/zalo-icon.png" alt="">
+        <img src="images/zalo-icon.webp" alt="">
     </a>
 </body>
 </html>
