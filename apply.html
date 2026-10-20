@@ -13,7 +13,7 @@
     <link rel="icon" href="images/favicon.ico" sizes="any">
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <link rel="stylesheet" href="styles.css">
-    <!-- Small embedded CSS example required by the assignment. -->
+    
     <style>
         .apply-page .apply-reference { font-family: "Courier New", monospace; }
     </style>
@@ -25,7 +25,7 @@
             <span class="brand-mark">L</span>
             <span class="brand-name">LUMINA<span>LEARN</span></span>
         </a>
-        <!-- Shared navigation: direct page links with hover/keyboard submenus, following the supplied team design. -->
+        
         <nav class="main-nav" aria-label="Main navigation">
 
             <div class="nav-dropdown">
@@ -98,7 +98,7 @@
             <aside class="apply-guide" aria-labelledby="apply-guide-title">
                 <h2 id="apply-guide-title">Find your reference</h2>
                 <p>Choose FE101 or UX102 in the form below.</p>
-                <!-- EDIT: keep these references consistent with jobs.html. -->
+                
                 <a class="apply-role" href="jobs.html#frontend-developer">
                     <span class="apply-reference">FE101</span>
                     <strong>Front-End Web Developer</strong>
@@ -114,20 +114,12 @@
             <section class="apply-form-panel">
                 <div class="apply-form-heading">
                     <h2 id="form-title">Job application</h2>
-                    <!-- Minimal inline CSS example required by the assignment. -->
+                    
                     <p id="form-instructions" style="font-weight: 700;">All fields are required except Other skills and CV / Resume.</p>
                 </div>
 
-                <!-- Assessment endpoint: POST to the exact URL in the supplied brief.
-                     This is a form test service, not a real recruitment backend.
-                     Use fictional details when testing; submissions leave this website. -->
-                <!-- Accessibility: aria-describedby references permanent guidance only.
-                     Hidden error text must not become a permanent field description.
-                     Each error has a persistent polite live region; only its message is hidden.
-                     Native HTML validation and CSS error states remain active.
-                     Polite announcements avoid asserting many urgent alerts on Submit. -->
                 <form class="apply-form" aria-labelledby="form-title" action="https://mercury.swin.edu.au/it000000/formtest.php" method="post" aria-describedby="form-instructions form-test-note">
-                    <!-- APPLY FORM 01: Job reference — one of the two advertised roles. -->
+                    
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">01</span> Your chosen role</legend>
                         <div class="apply-field">
@@ -142,13 +134,6 @@
                         </div>
                     </fieldset>
 
-                    <!-- APPLY FORM 02: Personal details.
-                         Names accept up to 20 characters: Unicode letters and internal spaces; no digits.
-                         DOB uses dd/mm/yyyy as required for Part 1.
-                         The pattern checks month lengths and leap years, requires year 1900 or later,
-                         and caps dates at 16/10/2026 (Asia/Ho_Chi_Minh).
-                         STATIC PART 1 CUTOFF: update the pattern and messages when finalising
-                         a later submission. HTML/CSS cannot calculate today dynamically. -->
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">02</span> Personal details</legend>
                         <div class="apply-form-grid">
@@ -183,7 +168,6 @@
                         </fieldset>
                     </fieldset>
 
-                    <!-- APPLY FORM 03: Address — state choices match the brief exactly. -->
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">03</span> Address</legend>
                         <div class="apply-form-grid">
@@ -223,7 +207,6 @@
                         </div>
                     </fieldset>
 
-                    <!-- APPLY FORM 04: Email and phone. Phone allows only 8–12 digits. -->
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">04</span> Contact details</legend>
                         <div class="apply-form-grid">
@@ -242,10 +225,6 @@
                         </div>
                     </fieldset>
 
-                    <!-- APPLY FORM 05: Every checkbox is required, matching the brief.
-                         These are core skills shared by both jobs. Candidates must
-                         confirm each; role-specific extra skills belong in the textarea.
-                         HTML required on a checkbox applies to that individual box. -->
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">05</span> Skills</legend>
                         <fieldset class="apply-choice-fieldset" aria-describedby="skills-help">
@@ -265,9 +244,6 @@
                         </div>
                     </fieldset>
 
-                    <!-- APPLY FORM 06: optional CV interface preview.
-                         Intentionally no name attribute: the selected file is not submitted
-                         to the university test endpoint. Add real upload handling in Part 2. -->
                     <fieldset class="apply-fieldset">
                         <legend><span class="apply-step">06</span> CV / Resume <span class="apply-optional">(optional)</span></legend>
                         <div class="apply-field apply-cv-upload">
@@ -302,7 +278,7 @@
                 </section>
             </aside>
         </div>
-        <!-- APPLY: native disclosure controls work with mouse, touch and keyboard. -->
+        
         <section class="apply-faq section-anchor" id="application-faq" aria-labelledby="application-faq-title">
             <h2 id="application-faq-title">A few helpful answers.</h2>
             <p class="apply-faq-intro">Quick guidance for completing this student project application form.</p>
@@ -333,7 +309,7 @@
             </a>
             <p>Building a Learning Platform for Everyone</p>
             <p>Making digital education accessible, inclusive and meaningful.</p>
-            <!-- Social links currently use platform homepages; replace with team profile URLs when available. -->
+            
             <div class="footer-social">
                 <a class="footer-social-icon" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook (opens in a new tab)"><img src="images/social-facebook.svg" alt="" width="22" height="22"></a>
                 <a class="footer-social-icon" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)"><img src="images/social-instagram.svg" alt="" width="22" height="22"></a>
@@ -349,7 +325,7 @@
         </div>
         <div class="footer-resources">
             <h2>Project Resources</h2>
-            <!-- Links to the group's actual repository and Jira board. -->
+            
             <p>Jira Project: <a href="https://hyo2108.atlassian.net/jira/software/projects/SCRUM/boards/1" target="_blank" rel="noopener noreferrer">COS10026 Jira board</a></p>
             <p>GitHub Repository: <a href="https://github.com/NguyenHieu-P/PROJECT-WEB-COS10026" target="_blank" rel="noopener noreferrer">PROJECT-WEB-COS10026</a></p>
             <p>Live website: <a href="https://voliad.github.io/test-web-tech/" target="_blank" rel="noopener noreferrer">View Lumina Learn</a></p>
