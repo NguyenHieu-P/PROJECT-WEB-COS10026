@@ -180,8 +180,8 @@ img {
 }
 
 .dropdown-menu a:hover,
-
-.dropdown-menu a:focus-visible { padding-left: 17px; background: #f0efff; color: var(--purple-dark); }
+.dropdown-menu a:active,
+.dropdown-menu a:focus-visible { padding-left: 17px; background: #f0efff; color: var(--purple-dark); font-weight: 700; }
 
 .header-actions {
     display: flex;
@@ -569,8 +569,11 @@ summary:focus-visible,
 }
 
 .mobile-menu-panel a:hover,
+.mobile-menu-panel a:active,
+.mobile-menu-panel a:focus-visible,
 .mobile-menu-panel a[aria-current="page"] {
     background: var(--lavender);
+    font-weight: 800;
 }
 
 .mobile-menu-panel a:focus-visible {
