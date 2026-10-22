@@ -22,67 +22,63 @@
 <body class="home-page">
     <a class="skip-link" href="#home-main">Skip to main content</a>
     
-    <header class="site-header">
-        <a class="brand" href="#home" aria-label="Lumina Learn home">
-            <span class="brand-mark">L</span>
-            <span class="brand-name">LUMINA<span>LEARN</span></span>
-        </a>
+    <!-- Sticky navigation -->
+<header class="site-header">
+    <a class="brand" href="#home" aria-label="Lumina Learn home">
+        <span class="brand-mark">L</span>
+        <span class="brand-name">LUMINA<span>LEARN</span></span>
+    </a>
 
-        <nav class="main-nav" aria-label="Main navigation">
+    <!-- HOME -->
+    <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-dropdown">
+            <a class="nav-link active" href="index.html#home" aria-current="page">Home</a>
+            <span class="caret" aria-hidden="true">⌄</span>
 
-            <div class="nav-dropdown">
-
-                <a class="nav-link active" href="index.html#home" aria-current="page">Home</a><span class="caret" aria-hidden="true">⌄</span>
-
-                <div class="dropdown-menu" role="group" aria-label="Home sections">
-
-                    <a href="index.html#our-impact">Our Impact</a>
-
-                    <a href="index.html#career">Career</a>
-
-                    <a href="index.html#why-join-us">Why Join Us?</a>
-
-                </div>
-
+            <div class="dropdown-menu" role="group" aria-label="Home sections">
+                <a href="index.html#our-impact">Our Impact</a>
+                <a href="index.html#career">Career</a>
+                <a href="index.html#why-join-us">Why Join Us?</a>
             </div>
-
-            <div class="nav-dropdown">
-
-                <a class="nav-link" href="jobs.html">Jobs</a><span class="caret" aria-hidden="true">⌄</span>
-
-                <div class="dropdown-menu" role="group" aria-label="Jobs sections">
-
-                    <a href="jobs.html#frontend-developer">Web Developer</a>
-
-                    <a href="jobs.html#ux-ui-designer">UX/UI Designer</a>
-
-                </div>
-
-            </div>
-
-            <div class="nav-dropdown">
-
-                <a class="nav-link" href="about.html">About Us</a><span class="caret" aria-hidden="true">⌄</span>
-
-                <div class="dropdown-menu" role="group" aria-label="About Us sections">
-
-                    <a href="about.html#our-project">Our Project</a>
-
-                    <a href="about.html#group-info">Get to Know</a>
-
-                    <a href="about.html#team-members">Meet Our Team</a>
-
-                    <a href="about.html#site-footer">Contact Us</a>
-
-                </div>
-
-            </div>
-
-        </nav>
-
-        <div class="header-actions">
-            <a class="apply-button" href="apply.html">Apply</a>
         </div>
+
+        <!-- JOBS -->
+        <div class="nav-dropdown">
+            <a class="nav-link" href="jobs.html">Jobs</a>
+            <span class="caret" aria-hidden="true">⌄</span>
+
+            <div class="dropdown-menu" role="group" aria-label="Jobs sections">
+                <a href="jobs.html#frontend-developer">Web Developer</a>
+                <a href="jobs.html#ux-ui-designer">UX/UI Designer</a>
+            </div>
+        </div>
+
+        <!-- ABOUT US -->
+        <div class="nav-dropdown">
+            <a class="nav-link" href="about.html">About Us</a>
+            <span class="caret" aria-hidden="true">⌄</span>
+
+            <div class="dropdown-menu" role="group" aria-label="About Us sections">
+                <a href="about.html#our-project">Our Project</a>
+                <a href="about.html#group-info">Get to Know</a>
+                <a href="about.html#team-members">Meet Our Team</a>
+                <a href="about.html#site-footer">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+        <a class="apply-button" href="apply.html">Apply</a>
+
+        <a class="menu-icon" href="#site-footer" aria-label="Go to footer">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+    </div>
+</header>
+        
         <details class="mobile-menu">
                 <summary class="mobile-menu-toggle">
                     <span class="mobile-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="mobile-menu-label"><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></span>
