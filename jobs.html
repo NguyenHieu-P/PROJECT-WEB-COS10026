@@ -19,11 +19,10 @@
     </style>
 </head>
 <body class="jobs-page">
-    <a class="skip-link" href="#jobs-main">Skip to main content</a>
 
     <!-- Sticky navigation -->
 <header class="site-header">
-    <a class="brand" href="#home" aria-label="Lumina Learn home">
+    <a class="brand" href="index.html#home" aria-label="Lumina Learn home">
         <span class="brand-mark">L</span>
         <span class="brand-name">LUMINA<span>LEARN</span></span>
     </a>
@@ -31,7 +30,7 @@
     <!-- HOME -->
     <nav class="main-nav" aria-label="Main navigation">
         <div class="nav-dropdown">
-            <a class="nav-link active" href="index.html#home" aria-current="page">Home</a>
+            <a class="nav-link" href="index.html#home">Home</a>
             <span class="caret" aria-hidden="true">⌄</span>
 
             <div class="dropdown-menu" role="group" aria-label="Home sections">
@@ -43,7 +42,7 @@
 
         <!-- JOBS -->
         <div class="nav-dropdown">
-            <a class="nav-link" href="jobs.html">Jobs</a>
+            <a class="nav-link active" href="jobs.html" aria-current="page">Jobs</a>
             <span class="caret" aria-hidden="true">⌄</span>
 
             <div class="dropdown-menu" role="group" aria-label="Jobs sections">
@@ -77,15 +76,7 @@
         </a>
     </div>
 </header>
-
-        <details class="mobile-menu">
-                <summary class="mobile-menu-toggle">
-                    <span class="mobile-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="mobile-menu-label"><span class="menu-label-open">Menu</span><span class="menu-label-close">Close</span></span>
-                </summary>
-                <nav class="mobile-menu-panel" aria-label="Mobile navigation"><details class="mobile-nav-group"><summary>Home</summary><a href="index.html#home">Home overview</a><a href="index.html#our-impact">Our mission</a><a href="index.html#career">Career paths</a><a href="index.html#why-join-us">Why join us?</a></details><details class="mobile-nav-group"><summary>Jobs</summary><a href="jobs.html" aria-current="page">Jobs overview</a><a href="jobs.html#frontend-developer">Front-End Web Developer</a><a href="jobs.html#ux-ui-designer">UX/UI Designer</a></details><details class="mobile-nav-group"><summary>About Us</summary><a href="about.html">About Us overview</a><a href="about.html#our-project">Our project</a><a href="about.html#group-info">Get to know us</a><a href="about.html#team-members">Meet our team</a><a href="about.html#site-footer">Contact us</a></details><a href="apply.html">Apply</a></nav>
-        </details>
-    </header>
-
+    <!-- main content -->
     <main id="jobs-main" tabindex="-1">
         <section class="jobs-hero" aria-labelledby="jobs-title">
             <div class="jobs-hero-copy">
@@ -93,7 +84,7 @@
                 <p>Bring your skills to a team making digital education more accessible, inclusive and meaningful. Help us build a learning platform that works for everyone.</p>
                 <a class="button button-primary" href="#open-roles">Explore open roles <span aria-hidden="true">↓</span></a>
             </div>
-            
+            <!-- introduce -->
             <div class="jobs-hero-art" aria-hidden="true">
                 <span class="jobs-art-ring"></span>
                 <span class="jobs-art-sun"></span>
@@ -106,7 +97,7 @@
                 </div>
             </div>
         </section>
-
+        <!-- open roles -->
         <section class="jobs-content section-anchor" id="open-roles" aria-labelledby="open-roles-title">
             <div class="jobs-heading">
                 <div>
@@ -117,7 +108,7 @@
             </div>
 
             <div class="jobs-layout">
-                
+                <!-- aside benefits and support -->
                 <aside class="jobs-aside" aria-labelledby="jobs-aside-title">
                     <h2 id="jobs-aside-title">Why Lumina Learn?</h2>
                     <ul class="jobs-benefits">
@@ -132,7 +123,7 @@
                         <a href="mailto:info@luminalearn.com">info@luminalearn.com</a>
                     </section>
                 </aside>
-
+                <!-- job overview show basic infomation 1-->
                 <div class="jobs-list jobs-overview" role="group" aria-label="Compare our two open roles">
                     <article class="jobs-overview-card section-anchor" id="frontend-developer" aria-labelledby="summary-FE101">
                     <p class="section-kicker">FE101</p>
@@ -142,7 +133,7 @@
                         <div><dt>Work arrangement</dt><dd>Hybrid · Full-time</dd></div>
                         <div class="jobs-overview-salary"><dt>Salary</dt><dd>AUD $80,000–$100,000 / year<span>Plus superannuation</span></dd></div>
                     </dl>
-                
+                    <!-- show details job infomation 1 (using AI for help to open and close the details)  -->
                     <details class="job-disclosure">
                         <summary><span class="job-show-label">View role details</span><span class="job-hide-label">Hide role details</span><span class="job-disclosure-icon" aria-hidden="true"></span></summary>
                         <div class="job-expanded-content">
@@ -185,6 +176,7 @@
                                 <li>Experience with accessibility testing and front-end performance optimisation.</li>
                             </ul>
                         </section>
+                        <!-- apply button -->
                         <footer class="job-detail-footer">
                             
                             <a class="button button-primary" href="apply.html">Apply for this role<span class="jobs-visually-hidden">: Front-End Web Developer</span></a>
@@ -192,7 +184,8 @@
                         </footer>
                     </div>
                     </details>
-                </article>
+                    <!-- job 2  -->
+                    </article>
                     <article class="jobs-overview-card section-anchor" id="ux-ui-designer" aria-labelledby="summary-UX102">
                     <p class="section-kicker">UX102</p>
                     <h3 id="summary-UX102">UX/UI Designer</h3>
@@ -201,7 +194,6 @@
                         <div><dt>Work arrangement</dt><dd>Hybrid · Full-time</dd></div>
                         <div class="jobs-overview-salary"><dt>Salary</dt><dd>AUD $75,000–$95,000 / year<span>Plus superannuation</span></dd></div>
                     </dl>
-                
                     <details class="job-disclosure">
                         <summary><span class="job-show-label">View role details</span><span class="job-hide-label">Hide role details</span><span class="job-disclosure-icon" aria-hidden="true"></span></summary>
                         <div class="job-expanded-content">
@@ -261,7 +253,6 @@
                             <li><span class="jobs-step-number" aria-hidden="true">03</span><div><h3>Review and submit</h3><p>Check your entries and correct any highlighted errors before submitting.</p></div></li>
                         </ol>
                         <div class="jobs-steps-footer">
-                        <p class="jobs-steps-note">Student project: submission opens the university form test results.</p>
                         <a class="text-link" href="apply.html">Open application form <span aria-hidden="true">↗</span></a>
                         </div>
                     </section>
