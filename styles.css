@@ -400,7 +400,7 @@ summary:focus-visible,
     box-shadow: 0 0 0 6px var(--purple-dark);
 }
 
-@media (max-width: 950px) {
+
 
     .site-header {
         gap: 14px;
@@ -418,267 +418,6 @@ summary:focus-visible,
     .apply-button {
         padding: 8px 16px;
     }
-
-}
-
-@media (max-width: 700px) {
-
-.nav-link {
-        font-size: 0.75rem;
-    }
-
-    .header-actions {
-        margin-left: auto;
-        gap: 10px;
-    }
-
-    .apply-button {
-        padding: 7px 13px;
-        font-size: 0.75rem;
-    }
-
-    .site-footer {
-        grid-template-columns: 1fr;
-        gap: 28px;
-        padding: 40px 7% 22px;
-    }
-
-    .copyright {
-        grid-column: auto;
-    }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-    }
-
-}
-
-.mobile-menu {
-    display: none;
-    position: static;
-}
-
-.mobile-menu-toggle {
-    flex-direction: column;
-    gap: 4px;
-    min-width: max(48px, 2.75rem);
-    min-height: max(48px, 3rem);
-    color: var(--purple-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: white;
-    cursor: pointer;
-    list-style: none;
-}
-
-.mobile-menu-toggle::-webkit-details-marker {
-    display: none;
-}
-
-.mobile-menu-toggle:focus-visible {
-    outline: 3px solid var(--purple-dark);
-    outline-offset: 3px;
-}
-
-.mobile-menu-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    position: relative;
-    width: 22px;
-    height: 14px;
-}
-
-.mobile-menu-bars > span {
-    width: 22px;
-    height: 2px;
-    background: var(--purple);
-
-    position: absolute;
-    left: 0;
-}
-
-.mobile-menu[open] .mobile-menu-toggle {
-    background: var(--lavender);
-    border-color: var(--purple);
-}
-
-.mobile-menu-panel {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    z-index: 1100;
-    width: min(290px, calc(100vw - 32px));
-    padding: 10px;
-    max-height: calc(100vh - 110px);
-    max-height: calc(100dvh - max(110px, 7rem));
-    overflow-y: auto;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: white;
-    box-shadow: 0 12px 30px rgba(31,29,94,.18);
-}
-
-.mobile-nav-group summary {
-    padding: 12px 14px;
-    min-height: 44px;
-    color: var(--purple-dark);
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-.mobile-nav-group[open] summary {
-    background: var(--lavender);
-}
-
-.mobile-nav-group summary:focus-visible {
-    outline: 3px solid var(--purple-dark);
-    outline-offset: -3px;
-}
-
-.mobile-nav-group a {
-    margin-left: 12px;
-    font-size: 0.8125rem;
-    font-weight: 400;
-}
-
-.mobile-menu-panel a {
-    display: block;
-    padding: 12px 14px;
-    min-height: 44px;
-    border-radius: 8px;
-    color: var(--purple-dark);
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.mobile-menu-panel a:hover,
-.mobile-menu-panel a:active,
-.mobile-menu-panel a:focus-visible,
-.mobile-menu-panel a[aria-current="page"] {
-    background: var(--lavender);
-    font-weight: 800;
-}
-
-.mobile-menu-panel a:focus-visible {
-    outline: 3px solid var(--purple-dark);
-    outline-offset: -3px;
-}
-
-@media (max-width: 1024px), (hover: none) {
-    .site-header .main-nav { display: none; }
-    .site-header .mobile-menu { display: block; }
-    .site-header { min-height: max(80.8px, 5.05rem); }
-    .site-header .header-actions { padding-right: 64px; }
-    .site-header .mobile-menu-toggle { position: absolute; top: 16px; right: 5%; }
-    .site-header .mobile-menu:not([open]) { width: 0; margin-left: -28px; }
-    
-    .site-header:has(.mobile-menu[open]) { position: relative; }
-    .site-header .mobile-menu[open] { flex-basis: 100%; width: 100%; }
-    .site-header .mobile-menu[open] .mobile-menu-panel {
-        position: static;
-        width: 100%;
-        max-height: none;
-        overflow: visible;
-        box-shadow: none;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .site-header {
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 12px 4%;
-    }
-
-    .site-header .brand-mark {
-        width: 28px;
-        height: 28px;
-        font-size: 1.125rem;
-    }
-
-    .site-header .brand {
-        gap: 6px;
-    }
-
-    .site-header .brand-name {
-        font-size: 0.75rem;
-    }
-
-    .site-header .header-actions {
-        gap: 8px;
-        margin-left: auto;
-    }
-    .site-header { min-height: max(72.8px, 4.55rem); }
-    .site-header .mobile-menu-toggle { top: 12px; right: 4%; }
-    .site-header .mobile-menu:not([open]) { margin-left: -8px; }
-
-    .site-header .apply-button {
-        padding: 8px 12px;
-        font-size: 0.75rem;
-    }
-
-}
-
-.mobile-menu-label {
-    font-size: 0.625rem;
-    line-height: 1;
-    font-weight: 700;
-}
-
-.menu-label-close,
-.mobile-menu[open] .menu-label-open {
-    display: none;
-}
-
-.mobile-menu[open] .menu-label-close {
-    display: inline;
-}
-
-.mobile-menu-bars > span:nth-child(1) {
-    top: 0;
-}
-
-.mobile-menu-bars > span:nth-child(2) {
-    top: 6px;
-}
-
-.mobile-menu-bars > span:nth-child(3) {
-    top: 12px;
-}
-
-.mobile-menu[open] .mobile-menu-bars > span:nth-child(1) {
-    top: 6px;
-    transform: rotate(45deg);
-}
-
-.mobile-menu[open] .mobile-menu-bars > span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu[open] .mobile-menu-bars > span:nth-child(3) {
-    top: 6px;
-    transform: rotate(-45deg);
-}
-
 /* HOME - index.html - Lê Thu Phương */
 
 .hero {
@@ -1064,72 +803,6 @@ summary:focus-visible,
     object-fit: contain;
 }
 
-@media (max-width: 950px) {
-
-    .impact-section {
-        grid-template-columns: 1fr 0.9fr;
-    }
-
-    .about-strip {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .about-strip .text-link {
-        grid-column: 1 / -1;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .hero {
-        grid-template-columns: 1fr;
-        padding: 55px 7%;
-        background-image: linear-gradient(rgba(34, 27, 25, 0.72), rgba(34, 27, 25, 0.72)), url("images/hero-classroom.webp");
-    }
-
-    .impact-section {
-        grid-template-columns: 1fr;
-        padding: 45px 5%;
-    }
-
-    .slider-track img {
-        aspect-ratio: 3 / 2;
-    }
-
-    .impact-copy h2 {
-        margin-top: 0;
-    }
-
-    .career-section,
-    .why-section {
-        padding: 55px 5%;
-    }
-
-    .benefit-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .benefit-card {
-        min-height: auto;
-    }
-
-    .about-strip {
-        grid-template-columns: 1fr;
-        padding: 45px 7%;
-    }
-
-    .about-strip .text-link {
-        grid-column: auto;
-    }
-
-    .cta-section {
-        margin: 0 4% 30px;
-        padding: 30px 25px;
-    }
-
-}
 
 .home-role-browser {
     display: grid;
@@ -1169,14 +842,7 @@ summary:focus-visible,
     text-decoration: none;
 }
 .home-role-links a:hover { background: var(--lavender); border-color: var(--purple); }
-@media (max-width: 1180px) {
-    .home-role-browser { margin: 32px 5%; }
-}
-@media (max-width: 700px) {
-    .home-role-browser { grid-template-columns: minmax(0, 1fr); margin: 28px 5%; padding: 22px 20px; }
-    .home-role-links { align-items: stretch; flex-direction: column; }
-    .home-role-links a { max-width: 100%; }
-}
+
 .home-search-form label { display: block; margin-bottom: 8px; color: var(--purple-dark); font-size: 0.875rem; font-weight: 700; }
 .home-search-controls { display: flex; gap: 12px; }
 .home-search-controls input {
@@ -1187,10 +853,7 @@ summary:focus-visible,
 .home-search-controls input::placeholder { color: #666579; }
 .home-search-controls button { border: 0; cursor: pointer; font: inherit; font-weight: 700; white-space: nowrap; }
 #job-search-note { margin: 8px 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.5; }
-@media (max-width: 700px) {
-    .home-search-controls { flex-direction: column; }
-    .home-search-controls button { min-height: 50px; }
-}
+
 #learning-slide-1:focus-visible ~ .slider-dots label[for="learning-slide-1"],
 #learning-slide-2:focus-visible ~ .slider-dots label[for="learning-slide-2"],
 #learning-slide-3:focus-visible ~ .slider-dots label[for="learning-slide-3"] {
@@ -1229,27 +892,6 @@ summary:focus-visible,
     width: min(1120px, 84%);
     height: 1px;
     background: #c9c8e7;
-}
-
-@media (max-width: 700px) {
-
-    .home-page .hero {
-        padding: 55px 7%;
-    }
-
-    .home-page .hero-actions {
-        gap: 12px;
-        margin-top: 26px;
-    }
-
-    .home-page .impact-section {
-        padding: 36px 7% 44px;
-    }
-
-    .home-page .impact-section::before {
-        width: 86%;
-    }
-
 }
 
 .home-page .about-strip {
@@ -1304,42 +946,9 @@ summary:focus-visible,
     line-height: 1.75;
 }
 
-@media (max-width: 700px) {
-
-    .home-page .about-strip {
-        width: 88%;
-        padding: 28px 24px;
-        border-radius: 20px;
-        grid-template-columns: minmax(0, 1fr);
-        margin-top: 28px;
-        gap: 16px;
-    }
-
-    .home-page .about-strip > div {
-        grid-row: auto;
-    }
-
-    .home-page .about-strip .text-link {
-        grid-column: 1;
-    }
-
-    .home-page .cta-section {
-        width: 88%;
-        padding: 28px 24px;
-        border-radius: 20px;
-        margin-bottom: 40px;
-    }
-
-    .home-page .cta-section .button {
-        max-width: 100%;
-        white-space: normal;
-        text-align: center;
-    }
-
-}
 
 /* JOBS - jobs.html - Nguyễn Trung Hiếu */
-
+/* hidden text */
 .jobs-page .jobs-visually-hidden {
     position: absolute;
     width: 1px;
@@ -1349,16 +958,13 @@ summary:focus-visible,
     clip-path: inset(50%);
     white-space: nowrap;
 }
-
+/* page intro and layout */
 .jobs-page .jobs-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-    align-items: center;
-    gap: 50px;
-    padding: 70px 8%;
-    overflow: hidden;
+    display: block;
+    text-align: center;
+    padding: 55px 8%;
 }
-
+/* decoration  */
 .jobs-page .jobs-hero h1 {
     margin: 0 0 24px;
     color: var(--purple);
@@ -1377,96 +983,14 @@ summary:focus-visible,
 
 .jobs-page .jobs-hero-copy > p:not(.section-kicker) {
     max-width: 610px;
-    margin: 0 0 28px;
+    margin: 0 auto 28px;
     color: var(--muted);
-    font-size: 1.125rem;
 }
 
 .jobs-page .jobs-hero .button {
     gap: 16px;
 }
-
-.jobs-page .jobs-hero-art {
-    position: relative;
-    display: grid;
-    place-items: center;
-    min-height: 310px;
-}
-
-.jobs-page .jobs-art-sun {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: var(--yellow);
-}
-
-.jobs-page .jobs-art-ring {
-    position: absolute;
-    width: 100%;
-    height: 220px;
-    border: 2px solid #b8b5e6;
-    border-radius: 50%;
-    transform: rotate(-28deg);
-}
-
-.jobs-page .jobs-art-card {
-    position: relative;
-    width: 265px;
-    padding: 25px;
-    border: 1px solid var(--line);
-    border-radius: 25px;
-    background: white;
-    box-shadow: 14px 14px 0 var(--purple);
-    transform: rotate(-5deg);
-}
-
-.jobs-page .jobs-art-symbol {
-    display: grid;
-    place-items: center;
-    width: 38px;
-    height: 38px;
-    margin-bottom: 16px;
-    border-radius: 10px 10px 10px 2px;
-    color: white;
-    background: var(--purple);
-    font-weight: 800;
-    font-size: 1.5rem;
-}
-
-.jobs-page .jobs-art-card strong {
-    display: block;
-    margin-bottom: 20px;
-    color: var(--purple);
-    font-size: 1.4375rem;
-    line-height: 1.2;
-}
-
-.jobs-page .jobs-art-line {
-    display: block;
-    height: 7px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    background: var(--lavender);
-}
-
-.jobs-page .jobs-art-line-short {
-    width: 65%;
-}
-
-.jobs-page .jobs-art-tag {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 6px 10px;
-    border-radius: 20px;
-    color: var(--purple-dark);
-    background: var(--yellow-soft);
-    font-size: 0.6875rem;
-    font-weight: 700;
-}
-
+/* content */
 .jobs-page .jobs-content {
     padding: 55px 6% 65px;
     background: var(--surface-soft);
@@ -1497,13 +1021,13 @@ summary:focus-visible,
     background: white;
     font-size: 0.8125rem;
 }
-
+ /* main content */
 .jobs-page .jobs-layout {
     display: flow-root;
     max-width: 1220px;
     margin: 0 auto;
 }
-
+/* aside */
 .jobs-page .jobs-aside {
     float: right;
     width: 25%;
@@ -1569,7 +1093,7 @@ summary:focus-visible,
 .jobs-page .jobs-aside-note li {
     margin-bottom: 9px;
 }
-
+/* apply steps */
 .jobs-page .jobs-application-steps {
     max-width: 1220px;
     margin: 32px auto 0;
@@ -1643,10 +1167,7 @@ summary:focus-visible,
     white-space: normal;
     font-size: 0.875rem;
 }
-@media (max-width: 800px) {
-    .jobs-page .jobs-apply-steps { grid-template-columns: 1fr; }
-    .jobs-page .jobs-application-steps { padding: 22px; }
-}
+
 
 .jobs-page .jobs-aside-note a {
     color: var(--purple);
@@ -1657,7 +1178,7 @@ summary:focus-visible,
 .jobs-page .jobs-aside-note .text-link {
     white-space: normal;
 }
-
+/* overview cards */
 .jobs-page .jobs-list {
     width: 72%;
 }
@@ -1723,16 +1244,7 @@ summary:focus-visible,
     font-weight: 400;
 }
 
-@media (max-width: 700px) {
-    .jobs-page .jobs-overview {
-        grid-template-columns: 1fr;
-    }
-
-    .jobs-page .jobs-overview-card {
-        padding: 22px;
-    }
-}
-
+/* full job infomation */
 .jobs-page .job-disclosure > summary {
     display: flex;
     align-items: center;
@@ -1779,7 +1291,7 @@ summary:focus-visible,
     margin: 0;
     color: var(--muted);
 }
-
+/* data : salary,location,... */
 .jobs-page .job-meta {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1803,7 +1315,7 @@ summary:focus-visible,
     margin: 0;
     font-size: 0.875rem;
 }
-
+/* responsibilities and skills */
 .jobs-page .job-detail {
     margin-top: 25px;
 }
@@ -1830,7 +1342,7 @@ summary:focus-visible,
     color: var(--purple);
     font-weight: 700;
 }
-
+/* button and job reference */
 .jobs-page .job-detail-footer {
     display: flex;
     flex-wrap: wrap;
@@ -1851,7 +1363,7 @@ summary:focus-visible,
     font-size: 0.75rem;
     letter-spacing: 0.5px;
 }
-
+/* respect */
 .jobs-page .jobs-inclusion {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -1878,104 +1390,6 @@ summary:focus-visible,
     color: #3e3e58;
 }
 
-@media (max-width: 950px) {
-
-    .jobs-page .jobs-hero {
-        gap: 30px;
-        padding: 55px 6%;
-    }
-
-    .jobs-page .jobs-hero-art {
-        min-height: 285px;
-    }
-
-    .jobs-page .jobs-art-card {
-        width: 230px;
-    }
-
-    .jobs-page .jobs-layout {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .jobs-page .jobs-list {
-        width: 100%;
-        order: 1;
-    }
-
-    .jobs-page .jobs-aside {
-        float: none;
-        width: 100%;
-        margin: 30px 0 0;
-        order: 2;
-    }
-
-    .jobs-page .jobs-inclusion {
-        gap: 30px;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .jobs-page .jobs-hero {
-        grid-template-columns: 1fr;
-        padding: 45px 6%;
-        gap: 35px;
-    }
-
-    .jobs-page .jobs-hero h1 {
-        letter-spacing: -1px;
-    }
-
-    .jobs-page .jobs-hero-copy > p:not(.section-kicker) {
-        font-size: 1rem;
-    }
-
-    .jobs-page .jobs-hero-art {
-        min-height: 285px;
-        max-width: 340px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .jobs-page .jobs-content {
-        padding: 40px 5%;
-    }
-
-    .jobs-page .jobs-heading {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .jobs-page .jobs-count {
-        margin: 0;
-    }
-
-    .jobs-page .job-meta {
-        grid-template-columns: 1fr;
-    }
-
-    .jobs-page .job-detail-footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .jobs-page .job-detail-footer .button {
-        width: 100%;
-    }
-
-    .jobs-page .jobs-inclusion {
-        grid-template-columns: 1fr;
-        padding: 40px 6%;
-    }
-
-    .jobs-page .main-nav .nav-link {
-        min-height: 44px;
-    }
-
-}
 
 /* ABOUT - about.html - Bùi Đào Việt Anh */
 
@@ -2242,67 +1656,6 @@ summary:focus-visible,
     font-size: 0.75rem;
 }
 
-@media (max-width: 950px) {
-
-    .about-page .about-hero {
-        gap: 35px;
-        padding: 55px 6%;
-    }
-
-    .about-page .about-values {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-@media (max-width: 700px) {
-
-    .about-page .about-hero {
-        grid-template-columns: 1fr;
-        padding: 45px 6%;
-    }
-
-    .about-page .about-hero h1 {
-        letter-spacing: -1px;
-    }
-
-    .about-page .about-hero > div:not(.about-hero-note) > p:not(.section-kicker) {
-        font-size: 1rem;
-    }
-
-    .about-page .about-hero-note {
-        margin-right: 12px;
-    }
-
-    .about-page .about-section {
-        padding: 45px 5%;
-    }
-
-    .about-page .about-group-layout,
-    .about-page .about-team {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .about-page .about-member {
-        padding: 24px;
-    }
-
-    .about-page .about-facts th,
-    .about-page .about-facts td {
-        padding: 12px;
-        font-size: 0.8125rem;
-    }
-
-    .about-page .about-country {
-        padding: 35px 6% 45px;
-    }
-
-    .about-page .main-nav .nav-link {
-        min-height: 44px;
-    }
-
-}
 
 .about-page {
     background: var(--lavender);
@@ -2701,157 +2054,7 @@ summary:focus-visible,
     background: var(--purple-dark);
 }
 
-@media (max-width: 800px) {
 
-    .about-page .about-country {
-        max-width: calc(100% - 40px);
-        padding: 0 24px;
-    }
-
-    .about-page .cta-section {
-        max-width: calc(100% - 40px);
-        padding: 32px 24px;
-    }
-
-    .about-page .about-hero {
-        grid-template-columns: 1fr;
-        padding: 50px 7%;
-        gap: 35px;
-    }
-
-    .about-page .about-hero .about-hero-note {
-        max-width: 340px;
-        width: 90%;
-        justify-self: center;
-    }
-
-    .about-page .about-group-layout {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .about-page .about-team {
-        gap: 50px;
-    }
-
-    .about-page .about-member,
-    .about-page .about-member:nth-child(even) {
-        grid-template-columns: 170px minmax(0, 1fr);
-        gap: 24px;
-        padding: 25px;
-        margin: 0;
-    }
-
-    .about-page .member-photo {
-        width: 170px;
-    }
-
-    .about-page .portrait-art {
-        height: 215px;
-    }
-
-    .about-page .portrait-art span {
-        font-size: 3rem;
-    }
-
-    .about-page .about-member .about-portrait,
-    .about-page .about-member:nth-child(even) .about-portrait {
-        grid-column: 1;
-        margin: -20px 0 0;
-    }
-
-    .about-page .about-member dt,
-    .about-page .about-member dd,
-    .about-page .about-member:nth-child(even) dt,
-    .about-page .about-member:nth-child(even) dd {
-        grid-column: 2;
-    }
-
-}
-
-@media (max-width: 560px) {
-
-    .about-page .about-country {
-        max-width: calc(100% - 32px);
-        margin: 20px auto 32px;
-        padding: 0 16px;
-    }
-
-    .about-page .about-country h2 {
-        font-size: 1.375rem;
-    }
-
-    .about-page .cta-section {
-        max-width: calc(100% - 32px);
-        margin-bottom: 40px;
-        padding: 28px 24px;
-        border-radius: 20px;
-    }
-
-    .about-page .cta-section p:not(.section-kicker) {
-        font-size: 0.9375rem;
-    }
-
-    .about-page .about-section {
-        padding: 45px 7%;
-    }
-
-    .about-page .about-group-layout h2 {
-        font-size: 3.125rem;
-    }
-
-    .about-page .about-member,
-    .about-page .about-member:nth-child(even) {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        padding: 26px;
-    }
-
-    .about-page .about-member .about-portrait,
-    .about-page .about-member:nth-child(even) .about-portrait {
-        order: -1;
-        align-self: center;
-        margin: -5px 0 32px;
-    }
-
-    .about-page .member-photo {
-        width: 200px;
-    }
-
-    .about-page .portrait-art {
-        height: 220px;
-    }
-
-    .about-page .about-member dt {
-        font-size: 1.4375rem;
-    }
-
-    .about-page .about-member .about-student-id {
-        align-self: flex-start;
-    }
-
-    .about-page .about-hero h1 {
-        font-size: 3rem;
-        letter-spacing: -1px;
-    }
-
-    .about-page .about-info-list {
-        padding: 24px 20px 24px 38px;
-        font-size: 0.875rem;
-    }
-
-    .about-page .about-photo-placeholder {
-        min-height: 230px;
-        padding: 20px;
-    }
-
-    .about-page .about-hero-note h2 {
-        font-size: 1.75rem;
-        line-height: 1.2;
-    }
-
-}
 
 .about-page .about-hero {
     padding-bottom: 54px;
@@ -2873,21 +2076,6 @@ summary:focus-visible,
     background: #c9c8e7;
 }
 
-@media (max-width: 800px) {
-
-    .about-page .about-hero {
-        padding-bottom: 36px;
-    }
-
-    .about-page .about-project-direction {
-        padding-top: 36px;
-    }
-
-    .about-page .about-project-direction::before {
-        width: 86%;
-    }
-
-}
 
 /* APPLY - apply.html - Trần Gia Cát Anh */
 
@@ -2953,13 +2141,6 @@ summary:focus-visible,
     text-underline-offset: 3px;
 }
 
-@media (max-width: 700px) {
-    .apply-page .apply-faq {
-        width: 88%;
-        padding: 24px 18px;
-        margin-bottom: 40px;
-    }
-}
 
 .apply-page .apply-hero {
     max-width: 1440px;
@@ -3324,137 +2505,4 @@ summary:focus-visible,
 
 .apply-page .apply-submit-area > .apply-hint {
     margin-top: 15px;
-}
-
-@media (max-width: 1050px) {
-
-    .apply-page .apply-hero {
-        padding-inline: 5%;
-    }
-
-    .apply-page .apply-layout {
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
-        gap: 22px;
-        padding-inline: 5%;
-    }
-
-    .apply-page .apply-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .apply-page .apply-guide {
-        padding: 22px;
-    }
-
-}
-
-@media (max-width: 800px) {
-
-    .apply-page .apply-layout {
-        grid-template-columns: 1fr;
-        grid-template-areas: "references" "form" "support";
-        grid-template-rows: auto;
-    }
-    .apply-page .apply-guide { padding: 18px; }
-    .apply-page .apply-guide > p,
-    .apply-page .apply-role > span:last-child { display: none; }
-    .apply-page .apply-guide h2 { font-size: 1.25rem; margin-bottom: 8px; }
-    .apply-page .apply-role { margin-top: 8px; padding: 10px 12px; }
-    .apply-page .apply-role strong { margin: 3px 0 0; font-size: 0.9375rem; }
-
-}
-
-@media (max-width: 700px) {
-
-    .apply-page .apply-hero {
-        padding: 45px 6% 35px;
-    }
-
-    .apply-page .apply-hero h1 {
-        letter-spacing: -1px;
-    }
-
-    .apply-page .apply-hero > p:last-child {
-        font-size: 1rem;
-    }
-
-    .apply-page .apply-layout {
-        padding-bottom: 40px;
-    }
-
-    .apply-page .apply-fieldset {
-        padding: 18px 14px;
-    }
-
-    .apply-page .apply-choice-list {
-        flex-direction: column;
-    }
-
-    .apply-page .apply-submit-area .button {
-        width: 100%;
-    }
-
-    .apply-page .main-nav .nav-link {
-        min-height: 44px;
-    }
-
-}
-
-.apply-page .apply-error-region { display: flow-root; }
-
-.apply-page .apply-error {
-    display: none;
-    margin: 8px 0 0;
-    color: #9f1239;
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-.apply-page .apply-field input:user-invalid,
-.apply-page .apply-field select:user-invalid,
-.apply-page .apply-field textarea:user-invalid {
-    border-color: #b42318;
-    background-color: #fff1f2;
-    box-shadow: 0 0 0 1px #b42318;
-}
-
-.apply-page .apply-field input:user-invalid ~ .apply-error-region .apply-error,
-.apply-page .apply-field select:user-invalid ~ .apply-error-region .apply-error,
-.apply-page .apply-field textarea:user-invalid ~ .apply-error-region .apply-error,
-.apply-page .apply-choice-fieldset:has(input:user-invalid) > .apply-error-region .apply-error {
-    display: block;
-}
-
-.apply-page .apply-choice:has(input:user-invalid) {
-    border-color: #b42318;
-    background-color: #fff1f2;
-}
-
-.skip-link {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 1200;
-    display: inline-block;
-    max-width: calc(100vw - 24px);
-    padding: 12px 18px;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    background: var(--purple-dark);
-    color: var(--white);
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.5;
-    text-decoration: none;
-    transform: translateY(-200%);
-}
-
-body .skip-link:focus,
-body .skip-link:focus-visible {
-    transform: translateY(0);
-    outline: 3px solid var(--yellow);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 6px var(--purple-dark);
 }
