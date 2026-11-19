@@ -1,0 +1,318 @@
+<?php require_once("header.inc"); ?>
+<?php require_once("nav.inc"); ?>
+<main id="home-main" tabindex="-1">
+   <!-- HOME -->
+   <section class="hero" id="home">
+    <div class="hero-copy">
+     <p class="eyebrow">
+      Building a Learning Platform for Everyone
+     </p>
+     <h1>
+      WE ARE
+      <span>
+       HIRING!
+      </span>
+     </h1>
+     <p class="hero-description">
+      At Lumina Learn, we develop accessible and inclusive digital
+                    education tools. Join our team and help transform online
+                    learning into an equitable experience for all.
+     </p>
+     <div class="hero-actions">
+      <a class="button button-primary" href="jobs.html">
+       Explore Jobs
+      </a>
+      <a class="button button-secondary" href="about.html">
+       About Us
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- SLIDER, use AI for method suggestion, youtube: https://www.youtube.com/watch?v=3erWBgEOrmE -->
+   <!-- Impact: image slider left, text right -->
+   <section class="impact-section" id="our-impact">
+    <fieldset class="image-slider">
+     <legend>
+      Learning at Lumina Learn
+     </legend>
+     <!-- CSS-only slider: choose an image using the dots -->
+     <input checked="" id="learning-slide-1" name="learning-slide" type="radio"/>
+     <input id="learning-slide-2" name="learning-slide" type="radio"/>
+     <input id="learning-slide-3" name="learning-slide" type="radio"/>
+     <div class="slider-window">
+      <div class="slider-track">
+       <img alt="Two children using an online learning platform together on a laptop." decoding="async" height="1024" loading="lazy" sizes="(max-width: 700px) 90vw, 50vw" src="images/learning1.webp" srcset="images/learning1-480.webp 480w, images/learning1-768.webp 768w, images/learning1-1200.webp 1200w" width="1536"/>
+       <img alt="A child exploring online courses and tracking learning progress." decoding="async" height="1024" loading="lazy" sizes="(max-width: 700px) 90vw, 50vw" src="images/learning2.webp" srcset="images/learning2-480.webp 480w, images/learning2-768.webp 768w, images/learning2-1200.webp 1200w" width="1536"/>
+       <img alt="A child celebrating a completed maths exercise, with illustrated learning progress charts." decoding="async" height="1024" loading="lazy" sizes="(max-width: 700px) 90vw, 50vw" src="images/learning3.webp" srcset="images/learning3-480.webp 480w, images/learning3-768.webp 768w, images/learning3-1200.webp 1200w" width="1536"/>
+      </div>
+     </div>
+     <div class="slider-dots">
+      <!-- SLIDE 1 -->
+      <label for="learning-slide-1">
+       <span class="slider-label">
+        Show image 1 of 3
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-prev" title="Previous image">
+        ‹
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-next" title="Next image">
+        ›
+       </span>
+      </label>
+      <!-- SLIDE 2 -->
+      <label for="learning-slide-2">
+       <span class="slider-label">
+        Show image 2 of 3
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-prev" title="Previous image">
+        ‹
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-next" title="Next image">
+        ›
+       </span>
+      </label>
+      <!-- SLIDE 3 -->
+      <label for="learning-slide-3">
+       <span class="slider-label">
+        Show image 3 of 3
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-prev" title="Previous image">
+        ‹
+       </span>
+       <span aria-hidden="true" class="slider-arrow slider-next" title="Next image">
+        ›
+       </span>
+      </label>
+     </div>
+    </fieldset>
+    <div class="impact-copy">
+     <h2 id="impact-title">
+      Making Learning Accessible to Everyone
+     </h2>
+     <p>
+      Education opens doors to new opportunities, but not everyone
+                    has equal access to the tools and resources they need.
+     </p>
+     <p>
+      At Lumina Learn, we use technology and thoughtful design to
+                    make online education more accessible, inclusive and engaging.
+                    We believe digital learning should adapt to people, not the
+                    other way around.
+     </p>
+     <p>
+      Our goal is to help learners overcome barriers, empower
+                    educators and create better learning experiences for everyone.
+     </p>
+    </div>
+   </section>
+   <!-- SEARCH BAR -->
+   <section class="home-role-browser" id="find-role">
+    <!-- INTRO -->
+    <div class="home-role-intro">
+     <h2 id="job-search-title">
+      Find your next role.
+     </h2>
+     <p>
+      Bring your skills to a team making learning more accessible.
+     </p>
+    </div>
+    <!-- FORM -->
+    <form action="jobs.html#open-roles" aria-describedby="job-search-note" class="home-search-form" method="get" role="search">
+     <label for="job-keyword">
+      Job title or keyword
+     </label>
+     <div class="home-search-controls">
+      <input id="job-keyword" maxlength="80" name="keywords" placeholder="e.g. front-end, design" type="search"/>
+      <button class="button button-dark" type="submit">
+       Search jobs
+       <span aria-hidden="true">
+        →
+       </span>
+      </button>
+     </div>
+     <p id="job-search-note">
+      Browse all open roles. Keyword filtering will be available in a later version.
+     </p>
+    </form>
+    <!-- LINKS -->
+    <div class="home-role-links">
+     <span>
+      Explore our roles
+     </span>
+     <a href="jobs.html#frontend-developer">
+      Front-End Web Developer
+      <span aria-hidden="true">
+       ↗
+      </span>
+     </a>
+     <a href="jobs.html#ux-ui-designer">
+      UX/UI Designer
+      <span aria-hidden="true">
+       ↗
+      </span>
+     </a>
+    </div>
+   </section>
+   <!--CARREER PATH-->
+   <!-- Career table with cell merging -->
+   <section class="career-section" id="career">
+    <div class="section-heading">
+     <h2>
+      Explore Your Career Path
+     </h2>
+     <p>
+      Different skills. One shared purpose. Discover how your
+                    strengths can help make learning more inclusive.
+     </p>
+    </div>
+    <div class="table-wrap">
+     <table class="career-table">
+      <caption class="table-title">
+       Career Opportunities at Lumina Learn
+      </caption>
+      <thead>
+       <tr>
+        <th scope="col">
+         Department
+        </th>
+        <th scope="col">
+         Career Focus
+        </th>
+        <th scope="col">
+         Skills &amp; Interests
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <th class="department-cell" rowspan="2" scope="rowgroup">
+         Design &amp; UX
+        </th>
+        <td>
+         Accessible interfaces
+        </td>
+        <td>
+         UI/UX design, prototyping
+        </td>
+       </tr>
+       <tr>
+        <td>
+         User research
+        </td>
+        <td>
+         Research, analysis
+        </td>
+       </tr>
+      </tbody>
+      <tbody>
+       <tr>
+        <th class="department-cell">
+         Engineering
+        </th>
+        <td colspan="2">
+         Responsive learning platforms — HTML, CSS and programming
+        </td>
+       </tr>
+       <tr>
+        <th class="department-cell">
+         Education &amp; Content
+        </th>
+        <td>
+         Digital learning resources
+        </td>
+        <td>
+         Writing, content design
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="table-note" style="font-weight: 600;">
+     These are our career areas.
+     <a href="jobs.html#open-roles">
+      Visit Jobs to see current openings.
+     </a>
+    </p>
+   </section>
+   <!---WHY JOIN US-->
+   <section class="why-section" id="why-join-us">
+    <div class="section-heading">
+     <h2>
+      WHY JOIN US?
+     </h2>
+    </div>
+    <div class="benefit-grid">
+     <article class="benefit-card">
+      <span aria-hidden="true" class="benefit-number">
+       01
+      </span>
+      <h3>
+       Inclusive by Design
+      </h3>
+      <p>
+       Help create digital experiences that welcome learners of all abilities and backgrounds.
+      </p>
+     </article>
+     <article class="benefit-card">
+      <span aria-hidden="true" class="benefit-number">
+       02
+      </span>
+      <h3>
+       Keep Growing
+      </h3>
+      <p>
+       Explore new ideas, develop your skills and learn through meaningful challenges.
+      </p>
+     </article>
+     <article class="benefit-card">
+      <span aria-hidden="true" class="benefit-number">
+       03
+      </span>
+      <h3>
+       Create Real Impact
+      </h3>
+      <p>
+       Turn innovative ideas into practical solutions that improve digital education.
+      </p>
+     </article>
+     <article class="benefit-card">
+      <span aria-hidden="true" class="benefit-number">
+       04
+      </span>
+      <h3>
+       Grow Together
+      </h3>
+      <p>
+       Collaborate with people who value different perspectives and shared success.
+      </p>
+     </article>
+    </div>
+   </section>
+   <!-- Call to action -->
+   <section class="cta-section" id="call-to-action">
+    <h2>
+     Your Next Chapter Starts Here!
+    </h2>
+    <p>
+     Bring your curiosity, creativity and passion for education to
+                Lumina Learn. Together, we can help make learning more accessible
+                for everyone.
+    </p>
+    <a class="button button-dark" href="jobs.html">
+     View Job Descriptions Now!
+    </a>
+   </section>
+   <section aria-labelledby="country-title" class="country-acknowledgement">
+    <h2 id="country-title">
+     Acknowledgement of Country
+    </h2>
+    <p>
+     We acknowledge the Traditional Custodians of the lands on which we work and learn. We pay our respects to Elders past and present and recognise the continuing connection of Aboriginal and Torres Strait Islander peoples to land, waters and community.
+    </p>
+    <p>
+     In our educational design, we aim to respect diverse cultures and perspectives and avoid using Indigenous knowledge or stories without permission and appropriate attribution.
+    </p>
+   </section>
+  </main>
+  
+<?php require_once("footer.inc"); ?>
