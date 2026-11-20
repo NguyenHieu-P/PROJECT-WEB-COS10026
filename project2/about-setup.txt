@@ -1,0 +1,28 @@
+ABOUT PART 2 — BÙI ĐÀO VIỆT ANH
+
+Chạy bằng PHP và MySQL, không mở about.php bằng file://.
+1. Copy thư mục project2 vào C:\xampp\htdocs\ nếu dùng XAMPP.
+2. Bật Apache và MySQL trong XAMPP.
+3. Import about.sql bằng phpMyAdmin. Script tạo database lumina_learn và bảng about.
+4. Mở http://localhost/project2/about.php.
+
+settings.php: host 127.0.0.1, user root, mật khẩu trống theo đề, database lumina_learn.
+Nếu nhóm có database chung, đổi $sql_db trong settings.php và dòng USE trong about.sql.
+Không thay settings.php của nhóm nếu nhóm đã cấu hình; dùng cấu hình chung đó.
+
+about.php: giao diện, tải đóng góp theo student_id từ database, escape HTML khi xuất.
+about-data.inc: kết nối MySQL và truy vấn bảng about.
+header.inc, nav.inc, footer.inc: các thành phần dùng chung, tách từ bản About đã chốt.
+styles/style.css: CSS hiện có, không thêm lớp vá giao diện.
+about.sql: dữ liệu Part 1 có sẵn; Part 2 của Phương, Hiếu và Cát Anh để NULL theo yêu cầu.
+Part 2 của Việt Anh mô tả đúng phần PHP/MySQL trong bản này.
+Chạy lại SQL không ghi đè đóng góp đã chỉnh trong database. Sửa dữ liệu bằng phpMyAdmin.
+
+Để ghép với nhóm: dùng header/nav/footer chung của nhóm, giữ class CSS và aria-current
+đúng trang đang mở. Chuyển link sang jobs.php/apply.php/index.php khi các trang đó hoàn tất.
+index.html, jobs.html, apply.html đi kèm chỉ là bản Part 1 để các link vẫn mở được;
+chúng CHƯA được nâng cấp chức năng Part 2. Gói này chỉ hoàn thành phần About.
+Không triển khai PHP lên GitHub Pages vì Pages không chạy PHP/MySQL.
+
+Kiểm tra: đổi dữ liệu part2 trong bảng about rồi tải lại; thử nội dung có ký tự HTML;
+tắt MySQL để xem trạng thái 503 và thông báo, không lộ thông tin kết nối trên trang.

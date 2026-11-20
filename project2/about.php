@@ -1,0 +1,428 @@
+<?php
+// About Page — Bùi Đào Việt Anh. AI assisted the PHP conversion and checks.
+require_once __DIR__ . '/about-data.inc';
+$contributions = [];
+$databaseUnavailable = false;
+try {
+    $contributions = about_load_contributions();
+} catch (mysqli_sql_exception $error) {
+    error_log('About database unavailable: ' . $error->getMessage());
+    http_response_code(503);
+    $databaseUnavailable = true;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="#3933ad" name="theme-color">
+<meta content="Meet the four-person student team behind the Lumina Learn EdTech recruitment website." name="description">
+<meta content="website" property="og:type">
+<meta content="Lumina Learn" property="og:site_name">
+<meta content="Lumina Learn | About Our Team" property="og:title">
+<meta content="Meet the four-person student team behind the Lumina Learn EdTech recruitment website." property="og:description">
+<title>
+   Lumina Learn | About Our Team
+  </title>
+<link href="images/favicon.ico" rel="icon" sizes="any">
+<link href="images/favicon.svg" rel="icon" type="image/svg+xml">
+<link href="styles/style.css" rel="stylesheet">
+<!-- Small embedded CSS example required by the assignment. -->
+<style>
+   .about-page .about-team-name { font-style: normal; }
+  </style>
+</head>
+<body class="about-page">
+<a class="skip-link" href="#about-main">
+   Skip to main content
+  </a>
+<!-- Sticky navigation -->
+<?php require __DIR__ . '/header.inc'; ?>
+<main id="about-main" tabindex="-1">
+<section aria-labelledby="about-title" class="about-hero">
+<div>
+<h1 id="about-title">
+      Different minds
+      <br>
+<span>
+       One shared purpose
+      </span>
+</h1>
+<p>
+      Meet the student team behind Lumina Learn. We bring our ideas, design skills and code together to create a recruitment website inspired by accessible, inclusive digital education.
+     </p>
+<a class="button button-primary" href="#team-members">
+      Meet our team
+     </a>
+</div>
+</section>
+<!-- ABOUT 01: Project direction — edit these descriptions to match the team's work. -->
+<section aria-labelledby="direction-title" class="about-section about-project-direction section-anchor" id="our-project">
+<div class="section-heading">
+<h2 id="direction-title">
+      Learning with real people
+     </h2>
+<p>
+      Lumina Learn is our fictional EdTech company. Its learning platform concept helps educators organise courses, resources and assignments, while helping learners understand their progress.
+     </p>
+</div>
+<div class="about-values">
+<article>
+<span class="about-value-number">
+       01
+      </span>
+<h3>
+       Accessible experiences
+      </h3>
+<p>
+       We prioritise clear headings, readable content, keyboard navigation and meaningful labels so more people can use our website.
+      </p>
+</article>
+<article>
+<span class="about-value-number">
+       02
+      </span>
+<h3>
+       Inclusive learning
+      </h3>
+<p>
+       Our concept recognises different learning needs, languages and devices. We aim to make the interface clear on both phones and computers.
+      </p>
+</article>
+<article>
+<span class="about-value-number">
+       03
+      </span>
+<h3>
+       Thoughtful teamwork
+      </h3>
+<p>
+       Each member owns a page and its styling. We coordinate shared navigation, review changes and work towards a consistent experience.
+      </p>
+</article>
+</div>
+</section>
+<!-- ABOUT 02: Group information — nested list required by the assignment. -->
+<section aria-labelledby="group-info-title" class="about-section about-section-tinted section-anchor" id="group-info">
+<div class="about-group-layout">
+<div>
+<h2 id="group-info-title">
+       Get to
+       <br>
+       know us
+      </h2>
+<p>
+       Four members, a shared design direction and a focus on making learning more accessible.
+      </p>
+</div>
+<ul class="about-info-list">
+<li>
+<strong>
+        Project group
+       </strong>
+<ul>
+<li>
+         Group name:
+         <em class="about-team-name">
+<span lang="zh">
+           麦当劳
+          </span>
+          Mai Dang Lao
+         </em>
+</li>
+<li style="font-weight: 600;">
+         Industry: G04 — Educational Technology
+        </li>
+<li>
+         Unit: COS10026
+        </li>
+</ul>
+</li>
+<li>
+<strong>
+        Tutorial session
+       </strong>
+<ul>
+<li>
+         Day: Friday
+        </li>
+<li>
+         Time: 9:00 AM
+        </li>
+<li>
+         Tutor: Thomas Marley Harrison
+        </li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<!-- ABOUT 03: Members — definition list, IDs and first-language quotes. -->
+<section aria-labelledby="members-title" class="about-section section-anchor" id="team-members">
+<div class="section-heading">
+<h2 id="members-title">
+      Meet our team
+     </h2>
+<p>
+      Different responsibilities - One consistent website
+     </p>
+</div>
+<!-- Initial layout inspiration: https://tuyendung.viettel.vn/
+         The design was subsequently adapted for Lumina Learn.
+         Member-card designs were converted from Figma to HTML/CSS
+         with AI assistance. -->
+<?php if ($databaseUnavailable): ?>
+    <p role="alert">Member contributions are temporarily unavailable. Please try again later.</p>
+    <?php endif; ?>
+    <dl class="about-team">
+<div class="about-member">
+<dt>
+       Lê Thu Phương
+       <span>
+        Home Page
+       </span>
+</dt>
+<dd class="about-portrait">
+<figure class="member-photo member-photo-1">
+<img alt="Lê Thu Phương" class="member-portrait-image" height="676" loading="lazy" src="images/member-phuong.webp" width="1000">
+<figcaption>
+         Home &amp; shared design
+        </figcaption>
+</figure>
+</dd>
+<dd class="about-student-id">
+       Student ID: 106208949
+      </dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['106208949']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape($contributions['106208949']['part2'] ?? '') ?></p></dd>
+<dd class="about-quote">
+<span aria-hidden="true" class="about-quote-mark">
+        “
+       </span>
+<blockquote lang="vi">
+        Code như ăn khoai tây chiên, một khi đã ăn là không dừng lại được.
+       </blockquote>
+<span class="about-quote-translation">
+        English: Coding is like french fries; once you start, you cannot stop.
+       </span>
+</dd>
+</div>
+<div class="about-member">
+<dt>
+       Nguyễn Trung Hiếu
+       <span>
+        Jobs Page
+       </span>
+</dt>
+<dd class="about-portrait">
+<figure class="member-photo member-photo-2">
+<img alt="Nguyễn Trung Hiếu" class="member-portrait-image" height="1000" loading="lazy" src="images/member-hieu.webp" width="750">
+<figcaption>
+         Jobs &amp; opportunities
+        </figcaption>
+</figure>
+</dd>
+<dd class="about-student-id">
+       Student ID: 105027509
+      </dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105027509']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape($contributions['105027509']['part2'] ?? '') ?></p></dd>
+<dd class="about-quote">
+<span aria-hidden="true" class="about-quote-mark">
+        “
+       </span>
+<blockquote lang="vi">
+        Sai một dấu ngoặc, đi cả một thanh điều hướng.
+       </blockquote>
+<span class="about-quote-translation">
+        English: Missing a bracket breaks the entire navigation bar.
+       </span>
+</dd>
+</div>
+<div class="about-member">
+<dt>
+       Trần Gia Cát Anh
+       <span>
+        Application Page
+       </span>
+</dt>
+<dd class="about-portrait">
+<figure class="member-photo member-photo-3">
+<img alt="Trần Gia Cát Anh" class="member-portrait-image" height="1000" loading="lazy" src="images/member-cat-anh.webp" width="757">
+<figcaption>
+         Application experience
+        </figcaption>
+</figure>
+</dd>
+<dd class="about-student-id">
+       Student ID: 105709742
+      </dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105709742']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape($contributions['105709742']['part2'] ?? '') ?></p></dd>
+<dd class="about-quote">
+<span aria-hidden="true" class="about-quote-mark">
+        “
+       </span>
+<blockquote lang="vi">
+        Form không validate, đời không nể.
+       </blockquote>
+<span class="about-quote-translation">
+        English: A form without validation commands no respect.
+       </span>
+</dd>
+</div>
+<div class="about-member">
+<dt>
+       Bùi Đào Việt Anh
+       <span>
+        About Page
+       </span>
+</dt>
+<dd class="about-portrait">
+<figure class="member-photo member-photo-4">
+<img alt="Bùi Đào Việt Anh" class="member-portrait-image" height="864" loading="lazy" src="images/member-viet-anh.webp" width="486">
+<figcaption>
+         Team &amp; About
+        </figcaption>
+</figure>
+</dd>
+<dd class="about-student-id">
+       Student ID: 105714199
+      </dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105714199']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape($contributions['105714199']['part2'] ?? '') ?></p></dd>
+<dd class="about-quote">
+<span aria-hidden="true" class="about-quote-mark">
+        “
+       </span>
+<blockquote lang="vi">
+        Fix bug từ từ, qua môn chắc tay
+       </blockquote>
+<span class="about-quote-translation">
+        English: Fix bugs patiently, pass the unit confidently.
+       </span>
+</dd>
+</div>
+</dl>
+</section>
+<section aria-labelledby="group-photo-title" class="about-section about-section-tinted">
+<div class="section-heading">
+<h2 id="group-photo-title">
+      Better - Together
+     </h2>
+</div>
+<figure class="about-group-photo">
+<img alt="The four members of the Lumina Learn project team together in a classroom." height="1200" loading="lazy" src="images/group-photo.webp" width="1600">
+<figcaption>
+      Our four - member Lumina Learn project team
+     </figcaption>
+</figure>
+</section>
+<section aria-labelledby="facts-title" class="about-section">
+<div class="section-heading">
+<!-- ABOUT 05: Fun facts — edit the supplied facts with each member. Caption, column headings, merged footer cell and hover styles are included. -->
+<h2 id="facts-title">
+      Beyond the code
+     </h2>
+</div>
+<div aria-labelledby="facts-caption" class="table-wrap about-table-wrap" role="region" tabindex="0">
+<table class="about-facts">
+<caption id="facts-caption">
+       Fun facts about
+       <span lang="zh">
+        麦当劳
+       </span>
+      Mai Dang Lao
+      </caption>
+<thead>
+<tr>
+<th scope="col">
+         Member
+        </th>
+<th scope="col">
+         Role
+        </th>
+<th scope="col">
+         Fun fact
+        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">
+         Lê Thu Phương
+        </th>
+<td>
+         Home page
+        </td>
+<td>
+         Loves french fries when coding late at night
+        </td>
+</tr>
+<tr>
+<th scope="row">
+         Nguyễn Trung Hiếu
+        </th>
+<td>
+         Jobs page
+        </td>
+<td>
+         Worries most about forgetting a closing tag
+        </td>
+</tr>
+<tr>
+<th scope="row">
+         Trần Gia Cát Anh
+        </th>
+<td>
+         Application page
+        </td>
+<td>
+         Writes regular expressions without looking at the documentation
+        </td>
+</tr>
+<tr>
+<th scope="row">
+         Bùi Đào Việt Anh
+        </th>
+<td>
+         About page
+        </td>
+<td>
+         Always runs the validator before submitting
+        </td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td colspan="3">
+         Four roles contributing to one EdTech recruitment website
+        </td>
+</tr>
+</tfoot>
+</table>
+</div>
+</section>
+<section aria-labelledby="about-cta-title" class="cta-section">
+<h2 id="about-cta-title">
+     Explore the opportunities we designed
+    </h2>
+<p>
+     See how our shared EdTech direction comes to life in the company's recruitment opportunities
+    </p>
+<a class="button button-dark" href="jobs.html">
+     Explore Jobs
+    </a>
+</section>
+<section aria-labelledby="country-title" class="country-acknowledgement">
+<h2 id="country-title">
+     Acknowledgement of Country
+    </h2>
+<p>
+     We acknowledge the Traditional Custodians of the lands on which we work and learn. We pay our respects to Elders past and present and recognise the continuing connection of Aboriginal and Torres Strait Islander peoples to land, waters and community.
+    </p>
+<p>
+     In our educational design, we aim to respect diverse cultures and perspectives and avoid using Indigenous knowledge or stories without permission and appropriate attribution.
+    </p>
+</section>
+</main>
+<?php require __DIR__ . '/footer.inc'; ?>
+</body>
+</html>
