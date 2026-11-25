@@ -2682,6 +2682,74 @@ html {
     transform: translate(-50%, 0);
 }
 
+/* Jobs Search Bar */
+.jobs-search {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    margin: 25px 0;
+    background: #f7f7fc;
+    border: 1px solid #e3e1f2;
+    border-radius: 16px;
+}
+
+.jobs-search label {
+    grid-column: 1 / -1;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3933ad;
+}
+
+.jobs-search input {
+    width: 100%;
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.jobs-search input:focus {
+    outline: 2px solid #3933ad;
+    outline-offset: 2px;
+}
+
+.jobs-search button {
+    padding: 14px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.no-jobs {
+    grid-column: 1 / -1;
+    padding: 30px;
+    text-align: center;
+    background: #f7f7fc;
+    border: 1px solid #e3e1f2;
+    border-radius: 12px;
+    color: #3933ad;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .jobs-search {
+        grid-template-columns: 1fr;
+    }
+
+    .jobs-search label {
+        grid-column: 1;
+    }
+
+    .jobs-search button {
+        width: 100%;
+    }
+}
+
+
 /* === MANAGE.PHP === */
 /*
  * manage.css - CSS riêng cho trang manage.php
@@ -2728,3 +2796,4 @@ html {
         font: inherit;
         min-width: 180px;
     }
+
