@@ -71,8 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 $pageTitle   = "Lumina Learn | HR Login";
 $bodyClass   = "apply-page";   // mượn style form của trang Apply
 $currentPage = "";
-include "header.inc";
-include "nav.inc";
+include "inc/header.inc";
+include "inc/nav.inc";
 ?>
 
 <main id="login-main" style="max-width: 480px; margin: 48px auto; padding: 0 16px;">
@@ -101,4 +101,4 @@ include "nav.inc";
     </section>
 </main>
 
-<?php include "footer.inc"; ?>
+<?php include "inc/footer.inc"; ?>
