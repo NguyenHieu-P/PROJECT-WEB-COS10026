@@ -163,8 +163,8 @@ mysqli_close($conn);
 $pageTitle   = "Lumina Learn | HR Management";
 $bodyClass   = "apply-page";   // mượn style form của trang Apply
 $currentPage = "";
-include "header.inc";
-include "nav.inc";
+include "inc/header.inc";
+include "inc/nav.inc";
 ?>
 <!-- Nạp CSS riêng của trang manage (file manage.css nằm cùng thư mục) -->
 <link rel="stylesheet" href="styles.css">
@@ -339,5 +339,5 @@ include "nav.inc";
  
 </main>
  
-<?php include "footer.inc"; ?>
+<?php include "inc/footer.inc"; ?>
  

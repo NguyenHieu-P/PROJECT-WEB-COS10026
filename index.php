@@ -15,8 +15,8 @@ $bodyClass   = "home-page";               // class cho thẻ <body>
 $currentPage = "home";                    // để menu "Home" được tô sáng
  
 // 2. Chèn phần đầu trang và menu
-include "header.inc";
-include "nav.inc";
+include "inc/header.inc";
+include "inc/nav.inc";
 ?>
  
     <main id="home-main">
@@ -226,6 +226,6 @@ include "nav.inc";
  
 <?php
 // 3. Chèn phần cuối trang (footer + nút Zalo + đóng thẻ)
-include "footer.inc";
+include "inc/footer.inc";
 ?>
  

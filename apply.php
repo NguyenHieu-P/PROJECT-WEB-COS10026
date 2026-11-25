@@ -1,22 +1,12 @@
 <?php
-/*
- * index.php - Trang chủ (Careers) của Lumina Learn
- * ----------------------------------------------------------
- * Trang được ghép từ 3 mảnh dùng chung:
- *   header.inc : phần <head> và thẻ mở <body>
- *   nav.inc    : thanh menu điều hướng
- *   footer.inc : footer, nút Zalo, thẻ đóng </body></html>
- * Phần ở giữa (<main>) là nội dung riêng của trang này.
- */
- 
-// 1. Khai báo thông tin của trang (header.inc và nav.inc sẽ dùng)
+
 $pageTitle   = "Lumina Learn | Careers";  // tiêu đề trên tab trình duyệt
 $bodyClass   = "apply-page";               // class cho thẻ <body>
 $currentPage = "apply";                    // để menu "Apply" được tô sáng
  
 // 2. Chèn phần đầu trang và menu
-include "header.inc";
-include "nav.inc";
+include "inc/header.inc";
+include "inc/nav.inc";
 ?>
 
     <main id="apply-main" tabindex="-1">
@@ -262,9 +252,12 @@ include "nav.inc";
       </div>
     </main>
 
-    <!-- Giữ nguyên Footer của mày (hoặc thay bằng <?php include 'footer.inc'; ?>) -->
-    <footer class="site-footer" id="site-footer">
-      <p class="copyright">© 2026 Lumina Learn. All rights reserved.</p>
-    </footer>
+   <?php 
+   
+   include 'inc/footer.inc'; 
+   
+   ?>
+    
+    
   </body>
 </html>
