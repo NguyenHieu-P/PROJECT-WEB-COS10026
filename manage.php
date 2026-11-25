@@ -1,571 +1,343 @@
-<link href="styles.css" rel="stylesheet">
-
 <?php
 /*
- * manage.php - HR manager page for Lumina Learn.
- * Queries supported on the eoi table:
- *   1. List all EOIs
- *   2. List EOIs for one position (job reference number)
- *   3. List EOIs for one applicant (first name, last name or both)
- *   4. Delete all EOIs with a given job reference number
- *   5. Change the Status of one EOI
- * All POST actions run BEFORE any HTML is sent, so header() redirects work.
+ * manage.php - HR Management Portal
+ * ----------------------------------------------------------
+ * Chỉ HR Manager đã đăng nhập mới vào được trang này.
+ * Các chức năng:
+ *   A. Xem tất cả EOI, hoặc lọc theo Job reference
+ *   B. Tìm ứng viên theo First name, Last name, hoặc cả 2
+ *   C. Sắp xếp kết quả theo cột người dùng chọn
+ *   D. Cập nhật Status của 1 EOI (New, Current, Final)
+ *   E. Xoá tất cả EOI của 1 Job reference
+ *
+ * Quy ước: form XEM/TÌM/SẮP XẾP gửi bằng GET (chỉ đọc dữ liệu),
+ *          form SỬA/XOÁ gửi bằng POST (thay đổi dữ liệu).
  */
-
+ 
+// ==========================================================
+// BƯỚC 1. KIỂM TRA ĐĂNG NHẬP
+// ==========================================================
+session_start();
+if (!isset($_SESSION["username"])) {
+    // Chưa đăng nhập thì đẩy về trang login
+    header("Location: login.php");
+    exit();
+}
+ 
+// ==========================================================
+// BƯỚC 2. KẾT NỐI DATABASE
+// ==========================================================
 require_once("settings.php");
-
-// Return false instead of throwing exceptions (PHP 8.1+ throws by default).
-mysqli_report(MYSQLI_REPORT_OFF);
-
-// ---------- 0. Constants and helper functions ---------- /
-$job_titles     = ["FE101" => "Front-End Web Developer", "FE102" => "UX/UI Designer"]; //echo $job_titles["FE101"] -> "Front-End Web Developer"
-$valid_statuses = ["New", "Current", "Final"]; //eco $valid_statuses[0] -> "New"
-$sort_columns   = [
-    "eoi"    => "EOInumber",
-    "job"    => "JobReferenceNumber",
-    "first"  => "FirstName",
-    "last"   => "LastName",
-    "status" => "Status"
-]; //echo $sort_columns["first"] -> "FirstName"
-$sort_labels = [
-    "eoi"    => "EOI number",
-    "job"    => "Job reference",
-    "first"  => "First name",
-    "last"   => "Last name",
-    "status" => "Status"
-]; //echo $sort_labels["last"] -> "Last name"
-$filter_keys = ["job_ref", "first_name", "last_name", "status", "sort", "order"];
-
-// Escape output. double_encode = false because process_eoi.php already
-// stores values through htmlspecialchars(); this avoids showing "&amp;amp;".
-function e($value) {
-    return htmlspecialchars((string)$value, ENT_QUOTES, "UTF-8", false); //Ent_QUOTES: convert both double and single quotes to HTML entities. UTF-8: character encoding. false: do not double encode existing HTML entities.
-}
-
-// Read one text value from $_GET or $_POST safely (ignores arrays).
-function read_text($source, $key, $max_length) {
-    if (!isset($source[$key]) || !is_string($source[$key])) {
-        return "";
-    }
-    return substr(trim($source[$key]), 0, $max_length);
-}
-
-// Build a query string that keeps the current filters (drops empty/default values).
-function filters_to_query($filters, $extra = []) {
-    $params = [];
-    foreach ($filters as $key => $value) {
-        if ($value === "" || ($key === "sort" && $value === "eoi") || ($key === "order" && $value === "desc")) {
-            continue;
-        }
-        $params[$key] = $value;
-    }
-    return http_build_query(array_merge($params, $extra));
-}
-
-// Hidden inputs so that POST forms remember the current filters.
-function keep_filter_inputs($filters) {
-    $html = "";
-    foreach ($filters as $key => $value) {
-        if ($value !== "") {
-            $html .= '<input type="hidden" name="keep[' . e($key) . ']" value="' . e($value) . '">';
-        }
-    }
-    return $html;
-}
-
-/* ---------- 1. Read and validate the filters from the URL ---------- */
-$filters = [
-    "job_ref"    => strtoupper(read_text($_GET, "job_ref", 10)),
-    "first_name" => read_text($_GET, "first_name", 20),
-    "last_name"  => read_text($_GET, "last_name", 20),
-    "status"     => read_text($_GET, "status", 10),
-    "sort"       => read_text($_GET, "sort", 10),
-    "order"      => read_text($_GET, "order", 4)
-];
-if (!preg_match("/^[A-Z0-9]{5}$/", $filters["job_ref"])) {
-    $filters["job_ref"] = "";
-}
-if (!in_array($filters["status"], $valid_statuses, true)) {
-    $filters["status"] = "";
-}
-if (!array_key_exists($filters["sort"], $sort_columns)) {
-    $filters["sort"] = "eoi";
-}
-$filters["order"] = ($filters["order"] === "asc") ? "asc" : "desc";
-
-/* ---------- 2. Connect and make sure the eoi table exists ---------- */
-$db_error = "";
-// @ hides the raw PHP warning; the friendly message below is shown instead.
 $conn = @mysqli_connect($host, $user, $pwd, $sql_db);
-
 if (!$conn) {
-    $db_error = "Unable to connect to the database. Check settings.php and make sure MySQL is running "
-              . "and the database \"" . $sql_db . "\" exists.";
-} else {
-    mysqli_set_charset($conn, "utf8mb4");
-
-    // Same structure as process_eoi.php, so manage.php also works before the first application.
-    $create_table_sql = "CREATE TABLE IF NOT EXISTS eoi (
-        EOInumber INT AUTO_INCREMENT PRIMARY KEY,
-        JobReferenceNumber VARCHAR(10) NOT NULL,
-        FirstName VARCHAR(20) NOT NULL,
-        LastName VARCHAR(20) NOT NULL,
-        DateOfBirth VARCHAR(10) NOT NULL,
-        Gender VARCHAR(20) NOT NULL,
-        StreetAddress VARCHAR(40) NOT NULL,
-        SuburbTown VARCHAR(40) NOT NULL,
-        State VARCHAR(10) NOT NULL,
-        Postcode VARCHAR(4) NOT NULL,
-        Email VARCHAR(100) NOT NULL,
-        Phone VARCHAR(15) NOT NULL,
-        Skill1 VARCHAR(50),
-        Skill2 VARCHAR(50),
-        Skill3 VARCHAR(50),
-        OtherSkills TEXT,
-        Status ENUM('New', 'Current', 'Final') DEFAULT 'New'
-    )";
-    if (!mysqli_query($conn, $create_table_sql)) {
-        $db_error = "Could not prepare the eoi table: " . mysqli_error($conn);
-    }
+    die("<p>Unable to connect to the database. Please check settings.php.</p>");
 }
-
-/* ---------- 3. Handle POST actions (delete, change status) ---------- */
-if ($conn && $db_error === "" && $_SERVER["REQUEST_METHOD"] === "POST") {
-    $action = read_text($_POST, "action", 20);
-    $result_params = ["msg" => "invalid_action"];
-
-    // Filters to restore after the redirect.
-    $keep = [];
-    if (isset($_POST["keep"]) && is_array($_POST["keep"])) {
-        foreach ($filter_keys as $key) {
-            $keep[$key] = read_text($_POST["keep"], $key, 20);
+ 
+// ==========================================================
+// BƯỚC 3. CÁC "DANH SÁCH TRẮNG" (whitelist)
+// Chỉ chấp nhận giá trị nằm trong các danh sách này.
+// ==========================================================
+ 
+// 3a. Các giá trị Status hợp lệ
+$valid_statuses = ["New", "Current", "Final"];
+ 
+// 3b. Các cột được phép sắp xếp: "tên cột trong DB" => "chữ hiện trên màn hình"
+//     Tên cột KHÔNG BAO GIỜ lấy trực tiếp từ người dùng ghép vào SQL,
+//     mà phải kiểm tra có nằm trong danh sách này hay không.
+$sort_columns = [
+    "EOInumber"          => "EOI number",
+    "JobReferenceNumber" => "Job reference",
+    "FirstName"          => "First name",
+    "LastName"           => "Last name",
+    "State"              => "State",
+    "Status"             => "Status"
+];
+ 
+// Hàm nhỏ giúp in dữ liệu ra HTML an toàn (chống chèn mã HTML/JS)
+function e($text) {
+    return htmlspecialchars((string)$text, ENT_QUOTES, "UTF-8");
+}
+ 
+$message = "";   // thông báo kết quả sau khi sửa/xoá
+ 
+// ==========================================================
+// BƯỚC 4. XỬ LÝ CÁC THAO TÁC THAY ĐỔI DỮ LIỆU (POST)
+// Mỗi form POST có 1 ô ẩn tên "action" để biết người dùng muốn làm gì.
+// ==========================================================
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $action = isset($_POST["action"]) ? $_POST["action"] : "";
+ 
+    // ---- D. Cập nhật Status của 1 EOI ----
+    if ($action === "update_status") {
+        $eoi_number = isset($_POST["eoi_number"]) ? (int)$_POST["eoi_number"] : 0;
+        $new_status = isset($_POST["status"]) ? $_POST["status"] : "";
+ 
+        if ($eoi_number > 0 && in_array($new_status, $valid_statuses)) {
+            $stmt = mysqli_prepare($conn, "UPDATE eoi SET Status = ? WHERE EOInumber = ?");
+            mysqli_stmt_bind_param($stmt, "si", $new_status, $eoi_number);   // s = chuỗi, i = số nguyên
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            $message = "EOI #" . $eoi_number . " status updated to " . $new_status . ".";
+        } else {
+            $message = "Invalid EOI number or status.";
         }
     }
-
-    if ($action === "update_status") {
-        $eoi_number = filter_var(read_text($_POST, "eoi_number", 11), FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
-        $new_status = read_text($_POST, "new_status", 10);
-
-        if ($eoi_number === false || !in_array($new_status, $valid_statuses, true)) {
-            $result_params = ["msg" => "invalid_status"];
-        } else {
-            $stmt = mysqli_prepare($conn, "UPDATE eoi SET Status = ? WHERE EOInumber = ?");
-            mysqli_stmt_bind_param($stmt, "si", $new_status, $eoi_number);
-            if (mysqli_stmt_execute($stmt)) {
-                $result_params = ["msg" => "status_updated", "eoi" => $eoi_number, "to" => $new_status];
-            } else {
-                $result_params = ["msg" => "db_error"];
-            }
-            mysqli_stmt_close($stmt);
-        }
-    } elseif ($action === "delete_job") {
-        $delete_ref = strtoupper(read_text($_POST, "delete_job_ref", 10));
-        $confirmed  = read_text($_POST, "confirm_delete", 3) === "yes";
-
-        if (!preg_match("/^[A-Z0-9]{5}$/", $delete_ref)) {
-            $result_params = ["msg" => "invalid_ref"];
-        } elseif (!$confirmed) {
-            $result_params = ["msg" => "confirm_required", "ref" => $delete_ref];
+ 
+    // ---- E. Xoá tất cả EOI của 1 Job reference ----
+    if ($action === "delete_job") {
+        $delete_ref = isset($_POST["delete_ref"]) ? trim($_POST["delete_ref"]) : "";
+ 
+        if ($delete_ref === "") {
+            $message = "Please choose a job reference to delete.";
         } else {
             $stmt = mysqli_prepare($conn, "DELETE FROM eoi WHERE JobReferenceNumber = ?");
             mysqli_stmt_bind_param($stmt, "s", $delete_ref);
-            if (mysqli_stmt_execute($stmt)) {
-                $result_params = ["msg" => "deleted", "ref" => $delete_ref, "n" => mysqli_stmt_affected_rows($stmt)];
-            } else {
-                $result_params = ["msg" => "db_error"];
-            }
+            mysqli_stmt_execute($stmt);
+            $deleted = mysqli_stmt_affected_rows($stmt);   // số dòng đã bị xoá
             mysqli_stmt_close($stmt);
+            $message = $deleted . " EOI(s) with job reference " . $delete_ref . " deleted.";
         }
-    }
-
-    mysqli_close($conn);
-    // Post/Redirect/Get: refreshing the page will not repeat the action.
-    header("Location: manage.php?" . filters_to_query($keep, $result_params));
-    exit();
-}
-
-/* ---------- 4. Message shown after a redirect ---------- */
-$notice = null;
-$msg = read_text($_GET, "msg", 20);
-if ($msg !== "") {
-    $msg_ref = strtoupper(read_text($_GET, "ref", 10));
-    switch ($msg) {
-        case "status_updated":
-            $notice = ["success", "EOI #" . (int)read_text($_GET, "eoi", 11) . " is now marked as "
-                . (in_array(read_text($_GET, "to", 10), $valid_statuses, true) ? read_text($_GET, "to", 10) : "updated") . "."];
-            break;
-        case "deleted":
-            $count = (int)read_text($_GET, "n", 11);
-            $notice = $count > 0
-                ? ["success", "Deleted " . $count . " EOI" . ($count === 1 ? "" : "s") . " for job reference " . $msg_ref . "."]
-                : ["info", "No EOIs found for job reference " . $msg_ref . ". Nothing was deleted."];
-            break;
-        case "confirm_required":
-            $notice = ["error", "Tick the confirmation box before deleting EOIs for " . $msg_ref . "."];
-            break;
-        case "invalid_ref":
-            $notice = ["error", "Enter a job reference of exactly 5 letters or numbers, for example FE101."];
-            break;
-        case "invalid_status":
-            $notice = ["error", "The status change was not valid. Choose New, Current or Final."];
-            break;
-        case "db_error":
-            $notice = ["error", "The database could not complete the request. Please try again."];
-            break;
-        default:
-            $notice = ["error", "Unknown action."];
     }
 }
-
-/* ---------- 5. Read data for the page ---------- */
-$stats    = ["Total" => 0, "New" => 0, "Current" => 0, "Final" => 0];
-$job_refs = array_keys($job_titles);
-$eois     = [];
-
-if ($conn && $db_error === "") {
-    // Overview cards
-    $result = mysqli_query($conn, "SELECT Status, COUNT(*) AS total FROM eoi GROUP BY Status");
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $stats["Total"] += (int)$row["total"];
-            if (isset($stats[$row["Status"]])) {
-                $stats[$row["Status"]] = (int)$row["total"];
-            }
-        }
-        mysqli_free_result($result);
-    }
-
-    // Job references that already exist in the table (for the dropdowns)
-    $result = mysqli_query($conn, "SELECT DISTINCT JobReferenceNumber FROM eoi ORDER BY JobReferenceNumber");
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $ref = strtoupper($row["JobReferenceNumber"]);
-            if (!in_array($ref, $job_refs, true)) {
-                $job_refs[] = $ref;
-            }
-        }
-        mysqli_free_result($result);
-    }
-
-    // Main list with optional filters (prepared statement)
-    $conditions = [];
-    $types = "";
-    $params = [];
-
-    if ($filters["job_ref"] !== "") {
-        $conditions[] = "JobReferenceNumber = ?";
-        $types .= "s";
-        $params[] = $filters["job_ref"];
-    }
-    if ($filters["first_name"] !== "") {
-        $conditions[] = "FirstName LIKE ?";
-        $types .= "s";
-        $params[] = "%" . addcslashes($filters["first_name"], "%_\\") . "%";
-    }
-    if ($filters["last_name"] !== "") {
-        $conditions[] = "LastName LIKE ?";
-        $types .= "s";
-        $params[] = "%" . addcslashes($filters["last_name"], "%_\\") . "%";
-    }
-    if ($filters["status"] !== "") {
-        $conditions[] = "Status = ?";
-        $types .= "s";
-        $params[] = $filters["status"];
-    }
-
-    $sql = "SELECT * FROM eoi";
-    if (!empty($conditions)) {
-        $sql .= " WHERE " . implode(" AND ", $conditions);
-    }
-    // Column names come from a whitelist, never directly from the user.
-    $sql .= " ORDER BY " . $sort_columns[$filters["sort"]] . " " . strtoupper($filters["order"]);
-    if ($filters["sort"] !== "eoi") {
-        $sql .= ", EOInumber ASC";
-    }
-
-    $stmt = mysqli_prepare($conn, $sql);
-    if ($stmt) {
-        if (!empty($params)) {
-            mysqli_stmt_bind_param($stmt, $types, ...$params);
-        }
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        while ($row = mysqli_fetch_assoc($result)) {
-            $eois[] = $row;
-        }
-        mysqli_stmt_close($stmt);
-    } else {
-        $db_error = "Could not read applications: " . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
+ 
+// ==========================================================
+// BƯỚC 5. ĐỌC CÁC LỰA CHỌN LỌC / TÌM / SẮP XẾP (GET)
+// ==========================================================
+$job_ref    = isset($_GET["job_ref"])    ? trim($_GET["job_ref"])    : "";
+$first_name = isset($_GET["first_name"]) ? trim($_GET["first_name"]) : "";
+$last_name  = isset($_GET["last_name"])  ? trim($_GET["last_name"])  : "";
+$sort       = isset($_GET["sort"])       ? $_GET["sort"]             : "EOInumber";
+$order      = isset($_GET["order"])      ? $_GET["order"]            : "ASC";
+ 
+// Kiểm tra cột sắp xếp và chiều sắp xếp theo danh sách trắng.
+// array_key_exists: $sort có phải là 1 "khoá" trong $sort_columns không?
+if (!array_key_exists($sort, $sort_columns)) {
+    $sort = "EOInumber";
 }
-
-$is_filtered = $filters["job_ref"] !== "" || $filters["first_name"] !== ""
-            || $filters["last_name"] !== "" || $filters["status"] !== "";
-
-/* ---------- 6. Output ---------- */
-$page_title = "Lumina Learn | Application Management";
-$body_class = "manage-body";
-$main_id    = "manage-main";
-$current_page = "manage";   // no menu item is highlighted on this page
-$page_style = "";
-include_once("header.inc");
-include_once("nav.inc");
+if ($order !== "ASC" && $order !== "DESC") {
+    $order = "ASC";
+}
+ 
+// ==========================================================
+// BƯỚC 6. TRUY VẤN DANH SÁCH EOI
+// Mẹo: 1 câu SQL cố định dùng cho mọi trường hợp.
+//   (? = '' OR JobReferenceNumber = ?)
+//   nghĩa là: nếu ô Job reference để trống thì điều kiện luôn đúng
+//   (không lọc), còn nếu có giá trị thì chỉ lấy dòng có job ref đó.
+// Tìm tên dùng LIKE '%chữ%' để gõ 1 phần tên vẫn tìm được.
+// ==========================================================
+$first_like = "%" . $first_name . "%";
+$last_like  = "%" . $last_name . "%";
+ 
+// $sort và $order đã qua danh sách trắng ở Bước 5 nên ghép vào SQL được an toàn.
+$sql = "SELECT * FROM eoi
+        WHERE (? = '' OR JobReferenceNumber = ?)
+          AND (? = '' OR FirstName LIKE ?)
+          AND (? = '' OR LastName LIKE ?)
+        ORDER BY " . $sort . " " . $order;
+ 
+$stmt = mysqli_prepare($conn, $sql);
+// 6 dấu ? nên cần 6 chữ "s" và 6 biến, đúng thứ tự
+mysqli_stmt_bind_param($stmt, "ssssss",
+    $job_ref, $job_ref,
+    $first_name, $first_like,
+    $last_name, $last_like
+);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$eois = mysqli_fetch_all($result, MYSQLI_ASSOC);   // lấy tất cả dòng thành 1 mảng
+mysqli_stmt_close($stmt);
+ 
+// Lấy danh sách các Job reference đang có trong bảng (cho 2 ô chọn)
+$job_refs = [];
+$ref_result = mysqli_query($conn, "SELECT DISTINCT JobReferenceNumber FROM eoi ORDER BY JobReferenceNumber");
+while ($row = mysqli_fetch_assoc($ref_result)) {
+    $job_refs[] = $row["JobReferenceNumber"];
+}
+ 
+mysqli_close($conn);
+ 
+// ==========================================================
+// BƯỚC 7. HIỂN THỊ TRANG
+// ==========================================================
+$pageTitle   = "Lumina Learn | HR Management";
+$bodyClass   = "apply-page";   // mượn style form của trang Apply
+$currentPage = "";
+include "header.inc";
+include "nav.inc";
+?>
+<!-- Nạp CSS riêng của trang manage (file manage.css nằm cùng thư mục) -->
+<link rel="stylesheet" href="styles.css">
+ 
+<?php
 ?>
 
-<!-- Main content -->
-<main class="manage-page" id="manage-main" tabindex="-1">
-
-    <section class="manage-hero">
-        <div>
-            <p class="manage-eyebrow">LUMINA LEARN / HR PORTAL</p>
-            <h1>Application Management</h1>
-            <p>
-                Manage and review candidate applications
-                submitted to Lumina Learn.
-            </p>
-        </div>
-    </section>
-
-    <section class="manage-content">
-
-        <?php if ($notice !== null): ?>
-            <p class="manage-alert manage-alert-<?php echo e($notice[0]); ?>" role="status">
-                <?php echo e($notice[1]); ?>
-            </p>
-        <?php endif; ?>
-
-        <?php if ($db_error !== ""): ?>
-            <section class="manage-panel">
-                <h2>Database not ready</h2>
-                <p class="manage-alert manage-alert-error"><?php echo e($db_error); ?></p>
-            </section>
-        <?php else: ?>
-
-        <!-- Dashboard overview -->
-        <div class="manage-heading">
-            <div>
-                <h2>Overview</h2>
-                <p>Track your recruitment applications.</p>
-            </div>
-        </div>
-
-        <div class="manage-stats">
-            <article class="stat-card">
-                <p>Total Applications</p>
-                <h3><?php echo $stats["Total"]; ?></h3>
-                <span>All submitted applications</span>
-            </article>
-            <article class="stat-card">
-                <p>New Applications</p>
-                <h3><?php echo $stats["New"]; ?></h3>
-                <span>Waiting for review</span>
-            </article>
-            <article class="stat-card">
-                <p>Current Applications</p>
-                <h3><?php echo $stats["Current"]; ?></h3>
-                <span>Currently being reviewed</span>
-            </article>
-            <article class="stat-card">
-                <p>Final Applications</p>
-                <h3><?php echo $stats["Final"]; ?></h3>
-                <span>Review completed</span>
-            </article>
-        </div>
-
-        <!-- Search applications -->
-        <section class="manage-panel" aria-labelledby="applications-title">
-
-            <div class="manage-heading">
-                <div>
-                    <h2 id="applications-title">Applications</h2>
-                    <p>Leave every field empty and press Search to list all EOIs.</p>
-                </div>
-            </div>
-
-            <form class="manage-filter" action="manage.php" method="get">
-                <div class="manage-filter-field">
-                    <label for="filter-job">Job reference</label>
-                    <select id="filter-job" name="job_ref">
-                        <option value="">All positions</option>
+<!-- ===== NỘI DUNG CHÍNH ===== -->
+ 
+<main id="manage-main" style="max-width: 1200px; margin: 40px auto; padding: 0 50px;">
+ 
+    <!-- Tiêu đề + nút đăng xuất -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+        <h1 style="color: var(--purple); margin: 0;">HR Management Portal</h1>
+        <p>
+            Logged in as <strong><?php echo e($_SESSION["username"]); ?></strong>
+        </p>
+    </div>
+ 
+    <!-- Thông báo sau khi sửa/xoá -->
+    <?php if ($message !== ""): ?>
+        <p style="margin: 20px 0; padding: 12px 16px; border-radius: 9px; background: #d1fae5; font-weight: 700;">
+            <?php echo e($message); ?>
+        </p>
+    <?php endif; ?>
+ 
+    <!-- ===== FORM A + B + C: LỌC, TÌM, SẮP XẾP (GET) ===== -->
+    <form method="get" action="manage.php" class="apply-fieldset" style="margin-top: 24px;">
+        <fieldset style="border: 0; margin: 0; padding: 0;">
+            <legend style="font-weight: 700; color: var(--purple-dark); font-size: 1.125rem;">Search EOIs</legend>
+            <div class="apply-form-grid" style="margin-top: 12px;">
+                <div class="apply-field">
+                    <label for="job_ref">Job reference</label>
+                    <select id="job_ref" name="job_ref">
+                        <option value="">All job references</option>
                         <?php foreach ($job_refs as $ref): ?>
-                            <option value="<?php echo e($ref); ?>" <?php echo $filters["job_ref"] === $ref ? "selected" : ""; ?>>
-                                <?php echo e($ref . (isset($job_titles[$ref]) ? " · " . $job_titles[$ref] : "")); ?>
+                            <option value="<?php echo e($ref); ?>" <?php if ($ref === $job_ref) echo "selected"; ?>>
+                                <?php echo e($ref); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-                <div class="manage-filter-field">
-                    <label for="filter-first">First name</label>
-                    <input type="text" id="filter-first" name="first_name" maxlength="20"
-                           value="<?php echo e($filters["first_name"]); ?>" placeholder="e.g. Anna">
+                <div class="apply-field">
+                    <label for="first_name">First name</label>
+                    <input type="text" id="first_name" name="first_name" value="<?php echo e($first_name); ?>">
                 </div>
-
-                <div class="manage-filter-field">
-                    <label for="filter-last">Last name</label>
-                    <input type="text" id="filter-last" name="last_name" maxlength="20"
-                           value="<?php echo e($filters["last_name"]); ?>" placeholder="e.g. Nguyen">
+                <div class="apply-field">
+                    <label for="last_name">Last name</label>
+                    <input type="text" id="last_name" name="last_name" value="<?php echo e($last_name); ?>">
                 </div>
-
-                <div class="manage-filter-field">
-                    <label for="filter-status">Status</label>
-                    <select id="filter-status" name="status">
-                        <option value="">Any status</option>
-                        <?php foreach ($valid_statuses as $status): ?>
-                            <option value="<?php echo $status; ?>" <?php echo $filters["status"] === $status ? "selected" : ""; ?>><?php echo $status; ?></option>
+                <div class="apply-field">
+                    <label for="sort">Sort by</label>
+                    <select id="sort" name="sort">
+                        <?php foreach ($sort_columns as $column => $label): ?>
+                            <option value="<?php echo $column; ?>" <?php if ($column === $sort) echo "selected"; ?>>
+                                <?php echo $label; ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-                <div class="manage-filter-field">
-                    <label for="filter-sort">Sort by</label>
-                    <select id="filter-sort" name="sort">
-                        <?php foreach ($sort_labels as $key => $label): ?>
-                            <option value="<?php echo $key; ?>" <?php echo $filters["sort"] === $key ? "selected" : ""; ?>><?php echo $label; ?></option>
-                        <?php endforeach; ?>
+                <div class="apply-field">
+                    <label for="order">Order</label>
+                    <select id="order" name="order">
+                        <option value="ASC" <?php if ($order === "ASC") echo "selected"; ?>>Ascending (A to Z, 1 to 9)</option>
+                        <option value="DESC" <?php if ($order === "DESC") echo "selected"; ?>>Descending (Z to A, 9 to 1)</option>
                     </select>
                 </div>
-
-                <div class="manage-filter-field">
-                    <label for="filter-order">Order</label>
-                    <select id="filter-order" name="order">
-                        <option value="desc" <?php echo $filters["order"] === "desc" ? "selected" : ""; ?>>Descending</option>
-                        <option value="asc" <?php echo $filters["order"] === "asc" ? "selected" : ""; ?>>Ascending</option>
-                    </select>
-                </div>
-
-                <div class="manage-filter-actions">
-                    <button type="submit">Search</button>
-                    <a class="manage-link-button" href="manage.php">List all EOIs</a>
-                </div>
-            </form>
-
-            <p class="manage-result-count">
-                Showing <strong><?php echo count($eois); ?></strong>
-                <?php echo count($eois) === 1 ? "application" : "applications"; ?>
-                <?php echo $is_filtered ? "matching your search" : "in total"; ?>.
+            </div>
+            <p style="margin-top: 18px;">
+                <button type="submit" class="button button-primary">Search</button>
+                <!-- Link về manage.php không kèm tham số = xem tất cả EOI -->
+                <a class="button button-secondary" href="manage.php">Show all EOIs</a>
             </p>
-
-            <!-- Application table -->
-            <div class="manage-table-wrapper">
-                <table class="manage-table">
-                    <thead>
+        </fieldset>
+    </form>
+ 
+    <!-- ===== KẾT QUẢ + FORM D: CẬP NHẬT STATUS ===== -->
+    <h2 style="color: var(--purple);"><?php echo count($eois); ?> EOI(s) found</h2>
+ 
+    <?php if (count($eois) === 0): ?>
+        <p>No EOIs match your search.</p>
+    <?php else: ?>
+        <!-- style nowrap: giữ các ô ngắn (mã, ngày, số điện thoại) trên 1 dòng -->
+        <div class="table-wrap" style="max-width: none;">
+            <table class="career-table">
+                <thead>
+                    <tr>
+                        <th style="white-space: nowrap;">EOI #</th>
+                        <th style="white-space: nowrap;">Job ref</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Date of birth</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Skills</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($eois as $eoi): ?>
                         <tr>
-                            <th scope="col">EOI Number</th>
-                            <th scope="col">Job Reference</th>
-                            <th scope="col">Applicant Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Job Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php if (empty($eois)): ?>
-                        <tr>
-                            <td colspan="7" class="empty-state">
-                                <strong>No applications to display</strong>
-                                <p>
-                                    <?php echo $is_filtered
-                                        ? "No EOIs match your search. Try another name or job reference."
-                                        : "Submitted applications will appear here after a candidate applies through apply.php."; ?>
-                                </p>
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($eois as $row):
-                            $id    = (int)$row["EOInumber"];
-                            $ref   = strtoupper($row["JobReferenceNumber"]);
-                            $skills = array_filter([$row["Skill1"], $row["Skill2"], $row["Skill3"]], function ($skill) {
-                                return $skill !== null && $skill !== "";
-                            });
-                        ?>
-                        <tr>
-                            <td>#<?php echo $id; ?></td>
-                            <td class="manage-ref"><?php echo e($ref); ?></td>
+                            <td style="white-space: nowrap;"><?php echo e($eoi["EOInumber"]); ?></td>
+                            <td style="white-space: nowrap;"><?php echo e($eoi["JobReferenceNumber"]); ?></td>
+                            <td><?php echo e($eoi["FirstName"]); ?></td>
+                            <td><?php echo e($eoi["LastName"]); ?></td>
+                            <td style="white-space: nowrap;"><?php echo e($eoi["DateOfBirth"]); ?></td>
+                            <td style="white-space: nowrap;"><?php echo e($eoi["Gender"]); ?></td>
                             <td>
-                                <details class="manage-details">
-                                    <summary><?php echo e($row["FirstName"] . " " . $row["LastName"]); ?></summary>
-                                    <dl>
-                                        <dt>Date of birth</dt><dd><?php echo e($row["DateOfBirth"]); ?></dd>
-                                        <dt>Gender</dt><dd><?php echo e($row["Gender"]); ?></dd>
-                                        <dt>Phone</dt><dd><?php echo e($row["Phone"]); ?></dd>
-                                        <dt>Address</dt>
-                                        <dd><?php echo e($row["StreetAddress"] . ", " . $row["SuburbTown"] . " " . $row["State"] . " " . $row["Postcode"]); ?></dd>
-                                        <dt>Core skills</dt><dd><?php echo empty($skills) ? "None selected" : e(implode(", ", $skills)); ?></dd>
-                                        <dt>Other skills</dt><dd><?php echo $row["OtherSkills"] === "" || $row["OtherSkills"] === null ? "Not provided" : nl2br(e($row["OtherSkills"])); ?></dd>
-                                    </dl>
-                                </details>
+                                <?php echo e($eoi["StreetAddress"]); ?>,
+                                <?php echo e($eoi["SuburbTown"]); ?>
+                                <?php echo e($eoi["State"]); ?>
+                                <?php echo e($eoi["Postcode"]); ?>
                             </td>
-                            <td><a href="mailto:<?php echo e($row["Email"]); ?>"><?php echo e($row["Email"]); ?></a></td>
-                            <td><?php echo e(isset($job_titles[$ref]) ? $job_titles[$ref] : "Unknown role"); ?></td>
+                            <td><?php echo e($eoi["Email"]); ?></td>
+                            <td style="white-space: nowrap;"><?php echo e($eoi["Phone"]); ?></td>
                             <td>
-                                <span class="status-badge status-<?php echo e(strtolower($row["Status"])); ?>">
-                                    <?php echo e($row["Status"]); ?>
-                                </span>
+                                <?php
+                                // Gộp các kỹ năng không rỗng, cách nhau bởi dấu phẩy
+                                $skills = array_filter([$eoi["Skill1"], $eoi["Skill2"], $eoi["Skill3"], $eoi["OtherSkills"]]);
+                                echo e(implode(", ", $skills));
+                                ?>
                             </td>
                             <td>
-                                <form class="manage-status-form" action="manage.php" method="post">
+                                <!-- Mỗi dòng có 1 form nhỏ để đổi Status.
+                                     Không ghi action: form gửi về đúng địa chỉ hiện tại
+                                     (giữ nguyên bộ lọc đang dùng). -->
+                                <form method="post">
                                     <input type="hidden" name="action" value="update_status">
-                                    <input type="hidden" name="eoi_number" value="<?php echo $id; ?>">
-                                    <?php echo keep_filter_inputs($filters); ?>
-                                    <label class="manage-visually-hidden" for="status-<?php echo $id; ?>">New status for EOI #<?php echo $id; ?></label>
-                                    <select id="status-<?php echo $id; ?>" name="new_status">
+                                    <input type="hidden" name="eoi_number" value="<?php echo e($eoi["EOInumber"]); ?>">
+                                    <label for="status-<?php echo e($eoi["EOInumber"]); ?>" style="display: none;">Status</label>
+                                    <select id="status-<?php echo e($eoi["EOInumber"]); ?>" name="status">
                                         <?php foreach ($valid_statuses as $status): ?>
-                                            <option value="<?php echo $status; ?>" <?php echo $row["Status"] === $status ? "selected" : ""; ?>><?php echo $status; ?></option>
+                                            <option value="<?php echo $status; ?>" <?php if ($status === $eoi["Status"]) echo "selected"; ?>>
+                                                <?php echo $status; ?>
+                                            </option>
                                         <?php endforeach; ?>
                                     </select>
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
                         </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                    </tbody>
-                </table>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+ 
+    <!-- ===== FORM E: XOÁ TẤT CẢ EOI THEO JOB REFERENCE (POST) ===== -->
+    <form method="post" action="manage.php" class="apply-fieldset" style="margin-top: 32px;">
+        <fieldset style="border: 0; margin: 0; padding: 0;">
+            <legend style="font-weight: 700; color: #b91c1c; font-size: 1.125rem;">Delete all EOIs for a job reference</legend>
+            <input type="hidden" name="action" value="delete_job">
+            <div class="apply-field" style="max-width: 320px; margin-top: 12px;">
+                <label for="delete_ref">Job reference</label>
+                <select id="delete_ref" name="delete_ref" required>
+                    <option value="">Choose a job reference</option>
+                    <?php foreach ($job_refs as $ref): ?>
+                        <option value="<?php echo e($ref); ?>"><?php echo e($ref); ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
-        </section>
-
-        <!-- Delete EOIs by job reference -->
-        <section class="manage-panel manage-danger-panel" aria-labelledby="delete-title">
-            <div class="manage-heading">
-                <div>
-                    <h2 id="delete-title">Delete EOIs by job reference</h2>
-                    <p>This permanently removes every application for the chosen position.</p>
-                </div>
-            </div>
-
-            <form class="manage-delete-form" action="manage.php" method="post">
-                <input type="hidden" name="action" value="delete_job">
-                <?php echo keep_filter_inputs($filters); ?>
-
-                <div class="manage-filter-field">
-                    <label for="delete-ref">Job reference</label>
-                    <select id="delete-ref" name="delete_job_ref" required>
-                        <option value="" selected disabled>Choose a job reference</option>
-                        <?php foreach ($job_refs as $ref): ?>
-                            <option value="<?php echo e($ref); ?>"><?php echo e($ref . (isset($job_titles[$ref]) ? " · " . $job_titles[$ref] : "")); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <label class="manage-confirm" for="confirm-delete">
-                    <input type="checkbox" id="confirm-delete" name="confirm_delete" value="yes">
-                    <span>I understand these EOIs cannot be recovered.</span>
-                </label>
-
-                <button class="manage-danger-button" type="submit">Delete EOIs</button>
-            </form>
-        </section>
-
-        <?php endif; ?>
-
-    </section>
-
+            <!-- Ô xác nhận bắt buộc tick, tránh bấm nhầm -->
+            <p style="margin-top: 12px;">
+                <input type="checkbox" id="confirm_delete" name="confirm_delete" required>
+                <label for="confirm_delete">I understand this cannot be undone.</label>
+            </p>
+            <button type="submit" class="button button-primary" style="background: #b91c1c;">Delete EOIs</button>
+        </fieldset>
+    </form>
+ 
 </main>
-
-<?php
-include_once("footer.inc");
-?>
+ 
+<?php include "footer.inc"; ?>
+ 

@@ -1,42 +1,42 @@
+<?php
+/*
+ * header.inc
+ * ----------------------------------------------------------
+ * Phần đầu của MỌI trang: từ <!DOCTYPE html> đến thẻ mở <body>.
+ *
+ * Trang nào muốn dùng file này thì khai báo 2 biến TRƯỚC khi include:
+ *   $pageTitle  : tiêu đề hiện trên tab trình duyệt
+ *   $bodyClass  : class CSS gắn vào thẻ <body> (ví dụ "home-page")
+ *
+ * Nếu trang quên khai báo, ta dùng giá trị mặc định bên dưới
+ * để trang không bị lỗi.
+ */
+
+// isset() kiểm tra biến đã có giá trị chưa. Chưa có thì gán mặc định.
+if (!isset($pageTitle)) {
+    $pageTitle = "Lumina Learn";
+}
+if (!isset($bodyClass)) {
+    $bodyClass = "";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="#3933ad" name="theme-color"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Lumina Learn" property="og:site_name"/>
-  <meta content="Lumina Learn | Careers" property="og:title"/>
-  <meta content="Join Lumina Learn and help make digital education accessible to everyone." property="og:description"/>
-  <title>
-   Lumina Learn | Careers
-  </title>
-  <link href="images/favicon.ico" rel="icon" sizes="any"/>
-  <link href="images/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <link as="image" href="images/hero-classroom.webp" rel="preload"/>
-  <!--LINK TO style.css-->
-  <link href="styles.css" rel="stylesheet"/>
-  <style>
-   .home-page #job-keyword { caret-color: var(--purple); }
-  </style>
- </head>
- <body class="home-page">
-  <a class="skip-link" href="#home-main">
-   Skip to main content
-  </a>
-  <!-- STICKY NAVIGATION-->
-  <!-- LOGO -->
-  <header class="site-header">
-   <a aria-label="Lumina Learn home" class="brand" href="index.php#home">
-    <span class="brand-mark">
-     L
-    </span>
-    <span class="brand-name">
-     LUMINA
-     <span>
-      LEARN
-     </span>
-    </span>
-   </a>
-   <!-- HOME -->
-   
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3933ad">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Lumina Learn">
+    <?php // echo: in giá trị của biến PHP ra HTML ?>
+    <meta property="og:title" content="<?php echo $pageTitle; ?>">
+    <meta property="og:description" content="Join Lumina Learn and help make digital education accessible to everyone.">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preload" as="image" href="images/hero-classroom.webp">
+    <!--LINK TO style.css-->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="<?php echo $bodyClass; ?>">

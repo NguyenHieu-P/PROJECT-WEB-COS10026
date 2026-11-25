@@ -2682,320 +2682,49 @@ html {
     transform: translate(-50%, 0);
 }
 
-/* ===== MANAGE PAGE (manage.php) ===== */
-
-.manage-page { 
-    display: block; 
-    background: #eef1ff; 
-    color: #17172b; 
-}
-.manage-page .manage-hero { 
-    padding: 60px 8% 40px; 
-    background: none; 
-    color: #17172b; 
-}
-.manage-page .manage-eyebrow { 
-    margin: 0 0 12px; 
-    color: #3933ad; 
-    font-size: .75rem; 
-    font-weight: 800; 
-    letter-spacing: 1.5px; 
-}
-.manage-page .manage-hero h1 { 
-    margin: 0 0 18px; 
-    color: #3933ad; 
-    font-size: clamp(2.25rem, 4.5vw, 3.75rem); 
-    line-height: 1.08;
-    letter-spacing: -2px; 
-}
-.manage-page .manage-hero h1::after { 
-    content: ""; 
-    display: block; 
-    width: 120px; 
-    height: 5px; 
-    margin-top: 14px; 
-    background: #ffbf24; 
-}
-.manage-page .manage-hero p:last-child { 
-    margin: 0; 
-    color: #55566b; 
-    font-size: 1.125rem; 
-}
-.manage-page .manage-content { 
-    width: 84%; 
-    max-width: 1280px; 
-    margin: 0 auto; 
-    padding-bottom: 65px; 
-}
-.manage-page .manage-heading { 
-    margin-bottom: 20px; 
-}
-.manage-page .manage-heading h2 { 
-    margin: 0 0 8px; 
-    color: #3933ad; 
-    font-size: 2rem; 
-}
-.manage-page .manage-heading p, .manage-page .manage-result-count { 
-    margin: 0 0 14px; 
-    color: #55566b; 
-    font-size: .875rem; 
-}
-
-/* Overview cards and white panels */
-.manage-page .manage-stats { 
-    display: grid; 
-    grid-template-columns: repeat(4, minmax(0, 1fr)); 
-    gap: 20px; 
-    margin-bottom: 32px; 
-}
-.manage-page .stat-card, .manage-page .manage-panel { 
-    box-sizing: border-box; 
-    background: #fff; 
-    border: 1px solid #d9ddf6; 
-    border-radius: 22px; 
-}
-.manage-page .stat-card { 
-    padding: 22px 24px; 
-    border-top: 5px solid #ffbf24; 
-}
-.manage-page .stat-card p { 
-    margin: 0; 
-    color: #55566b; 
-    font-size: .875rem; 
-}
-.manage-page .stat-card h3 { 
-    margin: 10px 0 6px; 
-    color: #29247f; 
-    font-size: 2.25rem; 
-}
-.manage-page .stat-card span { 
-    color: #55566b; 
-    font-size: .8125rem; 
-}
-.manage-page .manage-panel { 
-    padding: 32px; 
-    box-shadow: 0 8px 24px rgba(40, 37, 100, .05); 
-}
-.manage-page .manage-panel + .manage-panel { 
-    margin-top: 32px; 
-}
-.manage-page .manage-danger-panel { 
-    border-top: 5px solid #b42318; 
-}
-
-/* Filter form and delete form */
-.manage-page .manage-filter, .manage-page .manage-delete-form { 
-    display: grid; 
-    grid-template-columns: repeat(3, minmax(0, 1fr)); 
-    gap: 20px; margin: 0 0 24px; 
-    padding: 22px; 
-    border: 1px solid #d9ddf6; 
-    border-radius: 16px; 
-}
-.manage-page .manage-delete-form { 
-    grid-template-columns: 2fr 2fr auto; 
-    align-items: end; 
-    margin-bottom: 0; 
-}
-.manage-page .manage-filter-actions { 
-    grid-column: 1 / -1; 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 14px; 
-}
-.manage-page .manage-filter-field label { 
-    display: block; 
-    margin-bottom: 8px; 
-    color: #17172b; 
-    font-size: .875rem; 
-    font-weight: 700; 
-}
-.manage-page .manage-filter-field input, .manage-page .manage-filter-field select, .manage-page .manage-status-form select { 
-    box-sizing: border-box; width: 100%; 
-    min-height: 48px; 
-    padding: 10px 12px; 
-    border: 1px solid #8986b5; 
-    border-radius: 9px; 
-    background: #fff; 
-    color: #17172b; 
-    font: inherit; 
-    font-size: 1rem; 
-}
-.manage-page .manage-confirm { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    min-height: 48px; 
-    padding: 10px 14px; 
-    border: 1px solid #d9ddf6; 
-    border-radius: 9px; 
-    background: #f8f8ff; 
-    font-size: .875rem; 
-    cursor: pointer; 
-}
-
-/* Pill buttons like "SUBMIT APPLICATION" */
-.manage-page .manage-filter-actions button, .manage-page .manage-link-button, .manage-page .manage-status-form button, .manage-page .manage-danger-button { 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    min-height: 48px; 
-    padding: 10px 24px; 
-    border: 2px solid #3933ad; 
-    border-radius: 32px; 
-    background: #3933ad; 
-    color: #fff; 
-    font-family: inherit; 
-    font-size: .8125rem; 
-    font-weight: 800; 
-    letter-spacing: 1px; 
-    text-transform: uppercase; 
-    text-decoration: none; 
-    white-space: nowrap; 
-    cursor: pointer; 
-}
-.manage-page .manage-filter-actions button:hover, .manage-page .manage-status-form button:hover { 
-    background: #29247f; 
-    border-color: #29247f; 
-}
-.manage-page .manage-link-button { 
-    background: none; 
-    color: #3933ad; 
-}
-.manage-page .manage-link-button:hover { 
-    background: #3933ad; 
-    color: #fff; 
-}
-.manage-page .manage-danger-button { 
-    border-color: #b42318; 
-    background: #b42318; 
-}
-
-/* Table */
-.manage-page .manage-table-wrapper { 
-    position: relative; 
-    width: 100%; 
-    overflow-x: auto; 
-    border: 1px solid #d9ddf6; 
-    border-radius: 16px; 
-}
-.manage-page .manage-table { 
-    width: 100%; 
-    min-width: 750px; 
-    border-collapse: collapse; 
-    background: #fff; 
-    overflow-wrap: break-word; 
-}
-.manage-page .manage-table th, .manage-page .manage-table td { 
-    padding: 14px 12px; 
-    border-bottom: 1px solid #d9ddf6; 
-    color: #17172b; 
-    text-align: left; 
-    vertical-align: top; 
-    font-size: .875rem; 
-}
-.manage-page .manage-table th { 
-    background: #eef1ff; 
-    color: #29247f; 
-    font-size: .75rem; 
-    font-weight: 800; 
-    text-transform: uppercase; 
-}
-.manage-page .manage-table a, .manage-page .manage-ref { 
-    color: #3933ad; 
-}
-.manage-page .manage-ref { 
-    font-family: "Courier New", monospace; 
-    font-weight: 800; 
-}
-.manage-page .manage-details summary { 
-    color: #29247f; 
-    font-weight: 700; 
-    cursor: pointer; }
-.manage-page .manage-details dl { 
-    display: grid; 
-    grid-template-columns: auto 1fr; 
-    gap: 6px 14px; margin: 12px 0 0; 
-    padding: 14px; border-radius: 14px; 
-    background: #eef1ff; }
-.manage-page .manage-details dt { 
-    color: #55566b; 
-    font-weight: 700; 
-}
-.manage-page .manage-details dd { 
-    margin: 0; 
-}
-.manage-page .manage-status-form { 
-    display: flex; 
-    gap: 8px; 
-}
-.manage-page .manage-status-form select { 
-    width: auto; 
-    min-height: 40px; 
-    font-size: .875rem; 
-}
-.manage-page .manage-status-form button { 
-    min-height: 40px; 
-    padding: 8px 16px; 
-}
-.manage-page .empty-state { 
-    padding: 55px 20px; 
-    color: #55566b; 
-    text-align: center; 
-}
-
-/* Status pills and messages */
-.manage-page .status-badge { 
-    display: inline-block; 
-    padding: 5px 12px; 
-    border-radius: 999px; 
-    font-size: .75rem; 
-    font-weight: 800; 
-    white-space: nowrap; 
-}
-.manage-page .status-new { 
-    background: #fff1bf; 
-    color: #7a4b00;
-}
-.manage-page .status-current { 
-    background: #e4e6ff; 
-    color: #29247f; 
-}
-.manage-page .status-final { 
-    background: #ecfdf5; 
-    color: #065f46; 
-}
-.manage-page .manage-alert { 
-    margin: 0 0 24px; 
-    padding: 14px 18px; 
-    border-left: 4px solid #ffbf24; 
-    border-radius: 0 10px 10px 0; 
-    background: #fff8de; 
-    color: #29247f; 
-    font-weight: 700; 
-}
-.manage-page .manage-alert-success { 
-    border-color: #047857; 
-    background: #ecfdf5; 
-    color: #065f46; 
-}
-.manage-page .manage-alert-error { 
-    border-color: #b42318; 
-    background: #fef2f2; 
-    color: #9f1239; 
-}
-
-/* Text for screen readers only */
-.manage-page .manage-visually-hidden { 
-    position: absolute; 
-    width: 1px; 
-    height: 1px; 
-    overflow: hidden; 
-    clip-path: inset(50%); 
-    white-space: nowrap; 
-}
-
+/* === MANAGE.PHP === */
 /*
-@media (max-width: 900px) { .manage-page .manage-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 800px) { .manage-page .manage-filter, .manage-page .manage-delete-form { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 550px) { .manage-page .manage-stats { grid-template-columns: minmax(0, 1fr); } .manage-page .manage-content { width: 92%; } .manage-page .manage-panel { padding: 20px; } }
+ * manage.css - CSS riêng cho trang manage.php
+ * ----------------------------------------------------------
+ * File này được manage.php nạp sau styles.css chung,
+ * nên các quy tắc ở đây sẽ ghi đè lên styles.css khi cần.
+ */
+
+    /* Ô chọn và nút trong bảng EOI */
+    .career-table select,
+    .career-table button {
+        padding: 6px 2rem 6px 10px;   /* chừa chỗ bên phải cho mũi tên */
+        border: 1px solid #8986b5;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 0.85rem;
+    }
+    .career-table button {
+        background: #3933ad;
+        color: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 6px;
+    }
+    .career-table button:hover { background: #29247f; }
+    /* Bảng: cho phép xuống dòng theo từ, không bẻ chữ giữa từ */
+    .career-table th,
+    .career-table td {
+        word-break: normal;
+        overflow-wrap: break-word;
+        padding: 12px 10px;
+        vertical-align: middle;
+    }
+    .career-table th { white-space: normal; }
+    /* Bảng rộng hơn khung và cuộn ngang nếu cần, thay vì ép chữ */
+    .table-wrap { overflow-x: auto; }
+    .career-table { min-width: 1100px; }
+    .career-table tr:nth-child(even) td { background: #f8f8ff; }
+    /* Ô tìm kiếm và chọn ở form lọc */
+    #job_ref, #sort, #order, #delete_ref {
+        padding: 8px 2rem 8px 10px;   /* chừa chỗ bên phải cho mũi tên */
+        border: 1px solid #8986b5;
+        border-radius: 8px;
+        font: inherit;
+        min-width: 180px;
+    }

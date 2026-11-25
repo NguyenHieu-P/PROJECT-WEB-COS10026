@@ -1,15 +1,11 @@
 <?php
-// logout.php - end the manager session and go back to the login page.
-session_start();
-$_SESSION = [];
-
-// Remove the session cookie from the browser.
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), "", time() - 42000,
-        $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-}
-
-session_destroy();
-header("Location: login.php?logged_out=1");
+/*
+ * logout.php - Đăng xuất
+ * ----------------------------------------------------------
+ * Xoá toàn bộ dữ liệu session rồi quay về trang đăng nhập.
+ */
+session_start();      // phải mở session thì mới xoá được
+$_SESSION = [];       // xoá mọi biến trong session
+session_destroy();    // huỷ session trên server
+header("Location: login.php");
 exit();

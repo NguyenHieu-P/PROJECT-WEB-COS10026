@@ -1,146 +1,104 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 /*
- * login.php - HR manager login for manage.php.
- * Checks the username and password against the `user` table in lumina_db.
- * Default marker account (created automatically if it does not exist): admin / admin
+ * login.php - Trang đăng nhập cho HR Manager
+ * ----------------------------------------------------------
+ * Luồng xử lý:
+ *   1. Nếu đã đăng nhập rồi thì chuyển thẳng sang manage.php.
+ *   2. Nếu người dùng bấm "Log in" (form gửi bằng POST):
+ *        - lấy username, password
+ *        - tìm username trong bảng `user`
+ *        - so sánh mật khẩu gõ vào với mật khẩu lưu trong DB (dạng chữ thường)
+ *        - đúng: lưu tên vào $_SESSION rồi chuyển sang manage.php
+ *        - sai : hiện thông báo lỗi
+ *   3. Hiện form đăng nhập.
+ * Tài khoản mặc định cho người chấm: admin / admin
  */
-session_start();
-require_once("settings.php");
-mysqli_report(MYSQLI_REPORT_OFF);
 
-// Already logged in: go straight to the manage page.
-if (isset($_SESSION["manager"])) {
+// session_start() phải gọi TRƯỚC mọi HTML. Session giúp "nhớ" người
+// dùng đã đăng nhập khi họ chuyển qua lại giữa các trang.
+session_start();
+
+
+// Bước 1: đã đăng nhập thì không cần hiện form nữa
+if (isset($_SESSION["username"])) {
     header("Location: manage.php");
     exit();
 }
 
-$error    = "";
-$username = "";
+$error = "";      // thông báo lỗi (rỗng = không có lỗi)
+$username = "";   // giữ lại username đã gõ để hiện lại trong ô nhập
 
-$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+// Bước 2: xử lý khi form được gửi
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
+    $password = isset($_POST["password"]) ? $_POST["password"] : "";
 
-if (!$conn) {
-    $error = "Unable to connect to the database. Please try again later.";
-} else {
-    mysqli_set_charset($conn, "utf8mb4");
+    if ($username === "" || $password === "") {
+        $error = "Please enter both username and password.";
+    } else {
+        // Kết nối database bằng thông tin trong settings.php
+        require_once("settings.php");
+        $conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 
-    // 1. Create the user table if it does not exist yet.
-    mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `user` (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL
-    )");
-
-    // 2. Add the default account admin / admin if it is missing.
-    $check = mysqli_query($conn, "SELECT id FROM `user` WHERE username = 'admin'");
-    if ($check && mysqli_num_rows($check) === 0) {
-        $hash = password_hash("admin", PASSWORD_DEFAULT);
-        $stmt = mysqli_prepare($conn, "INSERT INTO `user` (username, password) VALUES ('admin', ?)");
-        mysqli_stmt_bind_param($stmt, "s", $hash);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-
-    // 3. Check the login form.
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $username = (isset($_POST["username"]) && is_string($_POST["username"])) ? trim($_POST["username"]) : "";
-        $password = (isset($_POST["password"]) && is_string($_POST["password"])) ? $_POST["password"] : "";
-
-        if ($username === "" || $password === "") {
-            $error = "Please enter both your username and password.";
+        if (!$conn) {
+            $error = "Unable to connect to the database.";
         } else {
-            $stmt = mysqli_prepare($conn, "SELECT id, password FROM `user` WHERE username = ?");
+            // 2b. Tìm người dùng theo username (prepared statement chống SQL injection)
+            $stmt = mysqli_prepare($conn, "SELECT password FROM `user` WHERE username = ?");
             mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
-            $row = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+            $result = mysqli_stmt_get_result($stmt);
+            $row = mysqli_fetch_assoc($result);   // null nếu không tìm thấy
             mysqli_stmt_close($stmt);
+            mysqli_close($conn);
 
-            $valid = false;
-            if ($row) {
-                $stored = $row["password"];
-                if (password_get_info($stored)["algoName"] !== "unknown") {
-                    // Normal case: the password is stored as a hash.
-                    $valid = password_verify($password, $stored);
-                } elseif (hash_equals($stored, $password)) {
-                    // Password was typed into phpMyAdmin as plain text:
-                    // accept it once, then replace it with a hash.
-                    $valid = true;
-                    $new_hash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = mysqli_prepare($conn, "UPDATE `user` SET password = ? WHERE id = ?");
-                    mysqli_stmt_bind_param($stmt, "si", $new_hash, $row["id"]);
-                    mysqli_stmt_execute($stmt);
-                    mysqli_stmt_close($stmt);
-                }
-            }
-
-            if ($valid) {
-                session_regenerate_id(true);   // new session id after login
-                $_SESSION["manager"] = $username;
-                mysqli_close($conn);
+            // 2c. So sánh mật khẩu người dùng gõ với mật khẩu trong DB
+            if ($row && $password === $row["password"]) {   // so sánh mật khẩu chữ thường
+                session_regenerate_id(true);           // đổi mã session sau khi đăng nhập (an toàn hơn)
+                $_SESSION["username"] = $username;     // đánh dấu "đã đăng nhập"
                 header("Location: manage.php");
                 exit();
+            } else {
+                $error = "Incorrect username or password.";
             }
-            $error = "Incorrect username or password.";
         }
     }
-    mysqli_close($conn);
 }
 
-$notice = "";
-$notice_class = "manage-alert";
-if (isset($_GET["logged_out"])) {
-    $notice = "You have logged out.";
-    $notice_class = "manage-alert manage-alert-success";
-} elseif (isset($_GET["required"])) {
-    $notice = "Please log in to view the application management page.";
-}
-
-$page_title   = "Lumina Learn | Manager Login";
-$body_class   = "manage-body";
-$main_id      = "login-main";
-$current_page = "login";
-$page_style   = "";
-include_once("header.inc");
-include_once("nav.inc");
+// Bước 3: hiện trang (dùng lại header, nav, footer chung)
+$pageTitle   = "Lumina Learn | HR Login";
+$bodyClass   = "apply-page";   // mượn style form của trang Apply
+$currentPage = "";
+include "header.inc";
+include "nav.inc";
 ?>
 
-<main class="manage-page" id="login-main" tabindex="-1">
-
-    <section class="manage-hero">
-        <div>
-            <p class="manage-eyebrow">LUMINA LEARN / HR PORTAL</p>
-            <h1>Manager login</h1>
-            <p>Sign in to review and manage applications.</p>
+<main id="login-main" style="max-width: 480px; margin: 48px auto; padding: 0 16px;">
+    <section class="apply-form-panel">
+        <div class="apply-form-heading">
+            <h2>HR Manager Login</h2>
+            <p>Please log in to manage Expressions of Interest (EOIs).</p>
         </div>
+
+        <?php if ($error !== ""): ?>
+            <p style="color: #b91c1c; font-weight: 700;"><?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
+
+        <form method="post" action="login.php">
+            <div class="apply-field" style="margin-bottom: 18px;">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required
+                       value="<?php echo htmlspecialchars($username); ?>">
+            </div>
+            <div class="apply-field" style="margin-bottom: 24px;">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="button button-primary">Log in</button>
+        </form>
     </section>
-
-    <section class="manage-content">
-        <div class="manage-panel login-panel">
-
-            <?php if ($error !== ""): ?>
-                <p class="manage-alert manage-alert-error" role="alert"><?php echo htmlspecialchars($error, ENT_QUOTES, "UTF-8"); ?></p>
-            <?php elseif ($notice !== ""): ?>
-                <p class="<?php echo $notice_class; ?>" role="status"><?php echo htmlspecialchars($notice, ENT_QUOTES, "UTF-8"); ?></p>
-            <?php endif; ?>
-
-            <form class="login-form" action="login.php" method="post">
-                <div class="manage-filter-field">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" maxlength="50" autocomplete="username" required
-                           value="<?php echo htmlspecialchars($username, ENT_QUOTES, "UTF-8"); ?>">
-                </div>
-                <div class="manage-filter-field">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" autocomplete="current-password" required>
-                </div>
-                <div class="manage-filter-actions">
-                    <button type="submit">Log in</button>
-                </div>
-            </form>
-
-        </div>
-    </section>
-
 </main>
 
-<?php include_once("footer.inc"); ?>
+<?php include "footer.inc"; ?>
