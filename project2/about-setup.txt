@@ -3,10 +3,10 @@ ABOUT PART 2 — BÙI ĐÀO VIỆT ANH
 Chạy bằng PHP và MySQL, không mở about.php bằng file://.
 1. Copy thư mục project2 vào C:\xampp\htdocs\ nếu dùng XAMPP.
 2. Bật Apache và MySQL trong XAMPP.
-3. Import about.sql bằng phpMyAdmin. Script tạo database lumina_learn và bảng about.
+3. Import about.sql bằng phpMyAdmin. Script tạo database lumina_db và bảng about.
 4. Mở http://localhost/project2/about.php.
 
-settings.php: host 127.0.0.1, user root, mật khẩu trống theo đề, database lumina_learn.
+settings.php: host 127.0.0.1, user root, mật khẩu trống theo đề, database lumina_db.
 Nếu nhóm có database chung, đổi $sql_db trong settings.php và dòng USE trong about.sql.
 Không thay settings.php của nhóm nếu nhóm đã cấu hình; dùng cấu hình chung đó.
 

@@ -1,6 +1,6 @@
 SET NAMES utf8mb4;
-CREATE DATABASE IF NOT EXISTS lumina_learn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE lumina_learn;
+CREATE DATABASE IF NOT EXISTS lumina_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE lumina_db;
 
 CREATE TABLE IF NOT EXISTS about (
     student_id CHAR(9) NOT NULL PRIMARY KEY,
