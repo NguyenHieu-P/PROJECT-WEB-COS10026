@@ -132,7 +132,7 @@ try {
          </em>
 </li>
 <li style="font-weight: 600;">
-         Industry: G04 — Educational Technology
+         Industry: G04 - Educational Technology
         </li>
 <li>
          Unit: COS10026
