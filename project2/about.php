@@ -194,7 +194,7 @@ try {
 <dd class="about-student-id">
        Student ID: 106208949
       </dd>
-<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['106208949']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['106208949']['part2'] ?? '') ?: 'Adapt the Home page to PHP and help maintain the shared layout and visual consistency.') ?></p></dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['106208949']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['106208949']['part2'] ?? '') ?: 'Converts the Home page to PHP, maintains shared page components and styling, and implements the application management page and login/logout functionality.') ?></p></dd>
 <dd class="about-quote">
 <span aria-hidden="true" class="about-quote-mark">
         “
@@ -225,7 +225,7 @@ try {
 <dd class="about-student-id">
        Student ID: 105027509
       </dd>
-<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105027509']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['105027509']['part2'] ?? '') ?: 'Adapt the Jobs page to PHP and help maintain the shared HTML structure and Git repository.') ?></p></dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105027509']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['105027509']['part2'] ?? '') ?: 'Converts the Jobs page to PHP, displays job listings from MySQL and implements keyword searches using prepared statements.') ?></p></dd>
 <dd class="about-quote">
 <span aria-hidden="true" class="about-quote-mark">
         “
@@ -256,7 +256,7 @@ try {
 <dd class="about-student-id">
        Student ID: 105709742
       </dd>
-<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105709742']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['105709742']['part2'] ?? '') ?: 'Adapt the application form to PHP, validate submitted data on the server and save valid applications to MySQL.') ?></p></dd>
+<dd class="about-contributions"><p><strong>Part 1</strong><br><?= about_escape($contributions['105709742']['part1'] ?? '') ?></p><p><strong>Part 2</strong><br><?= about_escape(($contributions['105709742']['part2'] ?? '') ?: 'Converts the application form to PHP, validates submitted data on the server and stores applications in MySQL using prepared statements.') ?></p></dd>
 <dd class="about-quote">
 <span aria-hidden="true" class="about-quote-mark">
         “
